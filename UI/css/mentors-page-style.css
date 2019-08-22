@@ -1,0 +1,90 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Comic Sans MS";
+}
+body{
+    background: url(../images/anders-jilden-uwbajDCODj4-unsplash.jpg) no-repeat;
+    background-size: cover;
+}
+.container{
+    min-height: 100vh;
+    width: 70%;
+    margin: 0 auto;
+    background-color: rgb(255, 255, 255, 0.9);
+}
+.header{
+    height: 50px;
+    width: 70%;
+    background-color: rgb(201,228,232);
+    position: fixed;
+}
+.header img{
+    height: 50px;
+    width: 180px;
+    float: left;
+}
+.menu{
+    float: right;
+}
+.menu a{
+    float: left;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: rgb(0, 63, 18);
+}
+.menu a li{
+    list-style: none;
+}
+.menu a:hover{
+    background-color:  rgb(255, 255, 255, 0.6);
+    border-top: solid 3px rgb(0, 63, 18);
+}
+.content{
+    color: rgb(0, 63, 18);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .footer{
+    bottom: 0;
+    min-height: 160px;
+    background: rgb(0, 63, 18);
+    color: #fff;
+    display: flex;
+
+}
+.ComeVistUs li{
+    list-style: none;
+    padding-top: 6px;
+    padding-right: 10px;
+   
+}
+.ComeVistUs{
+    padding-left: 10px;
+}
+.ContactUs li{
+    list-style: none;
+    padding-top: 6px;
+}
+.ContactUs{
+    margin-left: 20%;
+}
+.FollowUs{
+    margin-left: 20%;
+}
+.FollowUs li{
+    list-style: none;
+    padding-top: 6px;
+}
+.FollowUs ul li img{
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+}
+.ComeVistUs i, .ContactUs i , .FollowUs i{
+    font-weight:bold;
+    font-size: 19px;
+}
+ 

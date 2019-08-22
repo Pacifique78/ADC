@@ -1,0 +1,132 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Comic Sans MS";
+}
+body{
+    background: url(../images/anders-jilden-uwbajDCODj4-unsplash.jpg) no-repeat;
+    background-size: cover;
+}
+.container{
+    height: 100%;
+    width: 70%;
+    margin: 0 auto;
+    background-color: rgb(255, 255, 255, 0.9);
+}
+.header{
+    height: 50px;
+    width: 70%;
+    background-color: rgb(201,228,232);
+    position: fixed;
+}
+.header img{
+    height: 50px;
+    width: 180px;
+    float: left;
+}
+.menu{
+    float: right;
+}
+.menu a{
+    float: left;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: rgb(0, 63, 18);
+}
+.menu a li{
+    list-style: none;
+}
+.menu a:hover{
+    background-color:  rgb(255, 255, 255, 0.6);
+    border-top: solid 3px rgb(0, 63, 18);
+}
+.box{
+    color: rgb(0, 63, 18);
+    display: flex;
+    text-align: center;
+}
+.content{
+    margin: 20vh auto;
+}
+.content button{
+    margin: 3vh 2vh;
+    padding: 1vh;
+    border-radius: 5px;
+}
+#new-mentor{
+    width: 40vh;
+    height: 45vh;
+    border: 1px solid rgb(0, 63, 18);
+    margin: 3vh;
+    border-radius: 5px;
+}
+#new-mentor img{
+    border-radius: 50%;
+}
+.new-mentor{
+    width: 40vh;
+    height: 45vh;
+    border: 1px solid rgb(0, 63, 18);
+    margin: 3vh;
+    border-radius: 5px;
+}
+.new-mentor img{
+    border-radius: 50%;
+}
+#new-mentor p button{
+    margin: 1vh;
+}
+#new-mentor p span{
+    visibility: hidden;
+    padding: 1vh;
+}
+.new-mentor p button{
+    margin: 1vh;
+}
+.new-mentor p span{
+    visibility: hidden;
+    padding: 1vh;
+}
+.content button:hover{
+    background-color: rgb(255, 255, 255, 0.6);
+}
+.container .footer{
+    bottom: 0;
+    min-height: 160px;
+    background: #003f12;
+    color: #fff;
+    display: flex;
+
+}
+.ComeVistUs li{
+    list-style: none;
+    padding-top: 6px;
+    padding-right: 10px;
+   
+}
+.ComeVistUs{
+    padding-left: 10px;
+}
+.ContactUs li{
+    list-style: none;
+    padding-top: 6px;
+}
+.ContactUs{
+    margin-left: 20%;
+}
+.FollowUs{
+    margin-left: 20%;
+}
+.FollowUs li{
+    list-style: none;
+    padding-top: 6px;
+}
+.FollowUs ul li img{
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+}
+.ComeVistUs i, .ContactUs i , .FollowUs i{
+    font-weight:bold;
+    font-size: 19px;
+}
