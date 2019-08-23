@@ -46,14 +46,27 @@ body{
     justify-content: center;
     align-items: center;
 }
-
+.content .box{
+    width: 70vh;
+    min-height: 45vh;
+    margin: 150px auto;
+}
+.content button{
+    margin: 5vh 3vh;
+    padding: 1vh;
+    border-radius: 5px;
+    width: 25vh;
+    font-size: 16px;
+}
+.content button:hover{
+    background-color: rgb(255, 255, 255, 0.6);
+}
 .container .footer{
     bottom: 0;
     min-height: 160px;
     background: rgb(0, 63, 18);
     color: #fff;
     display: flex;
-
 }
 .ComeVistUs li{
     list-style: none;

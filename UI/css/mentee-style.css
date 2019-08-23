@@ -75,6 +75,10 @@ input{
     margin-left: 40px;
     font-size: 14px;
     color: rgb(0, 63, 18);
+    font-weight: bold;
+}
+.links{
+    margin: 0 auto;
 }
 .container .footer{
     bottom: 0;
