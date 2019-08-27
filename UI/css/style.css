@@ -50,6 +50,13 @@ body{
     margin-top: 200px;
     padding: 20px;
 }
+.about{
+    width: 80vh;
+    margin: 150px auto;
+}
+.about p{
+    font-size: 20px;
+}
 .box{
     display: flex;
     justify-content: center;
@@ -74,7 +81,7 @@ body{
     transition: 0s;
 }
 .container h3{
-    margin: 8vh;
+    margin: 8vh auto;
     padding: 0 30vh;
 } 
 .container .footer{
