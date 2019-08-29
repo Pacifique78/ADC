@@ -71,7 +71,7 @@ body{
     font-size: 25px;
 }
 .content h2{
-    margin: 3vh 10vh;
+    margin: 3% 10%;
     border-radius: 10px;
     border: 4px solid ;
     transition: 2s;
@@ -82,7 +82,7 @@ body{
 }
 .container h3{
     margin: 8vh auto;
-    padding: 0 30vh;
+    padding: 0 20%;
 } 
 .container .footer{
     bottom: 0;
@@ -110,6 +110,10 @@ body{
 }
 .FollowUs{
     margin-left: 20%;
+}
+.FollowUs a{
+    text-decoration: none;
+    color:#fff;
 }
 .FollowUs li{
     list-style: none;

@@ -4,5 +4,5 @@ signInBtn.addEventListener('click', function(){
 });
 let cancelBtn = document.getElementById("cancel");
 cancelBtn.addEventListener('click', function(){
-    window.location.assign("index.html");
+    window.location.assign("../index.html");
 });
