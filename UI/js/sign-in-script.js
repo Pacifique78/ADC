@@ -1,6 +1,6 @@
 
 let signBtn = document.getElementById("sign");
-signBtn.addEventListener('click', function(){
+signBtn.addEventListener('click', () => {
     let statusInput = document.getElementById("status");
     if(statusInput.value.toLowerCase() == "admin"){
         window.location.assign("../html/admin-page.html");
