@@ -87,6 +87,10 @@ body{
 .FollowUs{
     margin-left: 20%;
 }
+.FollowUs a{
+    text-decoration: none;
+    color:#fff;
+}
 .FollowUs li{
     list-style: none;
     padding-top: 6px;
