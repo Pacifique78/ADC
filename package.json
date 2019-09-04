@@ -27,9 +27,12 @@
     "@babel/runtime": "^7.5.5",
     "@hapi/joi": "^15.1.1",
     "babel-loader": "^8.0.6",
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
+    "bcrypt": "^3.0.6",
     "express": "^4.17.1",
     "mocha": "^6.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0"
   }
 }

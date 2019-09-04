@@ -2,6 +2,7 @@ import createUserSchema from '../joi_schemas/createuser_schem';
 import Joi from '@hapi/joi';
 import users from '../model/userModel';
 import loginUserSchema from '../joi_schemas/loginUserSchema';
+import bcrypt from 'bcrypt';
 
 class usersClass{
     createUser(req,res){
@@ -27,11 +28,21 @@ class usersClass{
             }
             else{
                 const newUser=req.body;
-                users.push(newUser);
+                const saltRounds = 10;
+                const passWord = newUser.password;
+                bcrypt.hash(passWord, saltRounds, (err, hash) => {
+                    newUser.password = hash;
+                    users.push(newUser);
+                  });
                 return res.status(200).json({
                 status: 200,
                 message: "user created",
-                data: users
+                data: {
+                    "fName": newUser.fName,
+                    "lName": newUser.lName,
+                    "email": newUser.email,
+                    "status": newUser.status
+                }
             });
             }
             
@@ -61,10 +72,10 @@ class usersClass{
                         status: 200,
                         message: "User logged in",
                         data: {
-                            fName: user_found.fName,
-                            lName: user_found.lName,
-                            email: user_found.email,
-                            status: user_found.status
+                            fName: userFound.fName,
+                            lName: userFound.lName,
+                            email: userFound.email,
+                            status: userFound.status
                         }
                     });
                 }else{
