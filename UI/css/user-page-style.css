@@ -55,12 +55,13 @@ body{
 }
 #new-mentor{
     width: 80%;
-    height: 50%;
-    border: 1px solid rgb(0, 63, 18);
+    height: 55%;
     margin: 2% auto;
     padding: 1%;
     border-radius: 5px;
     display: flex;
+    box-shadow: 3px 3px 5px 5px rgb(0, 63, 18);
+    background-color: whitesmoke;
 }
 #new-mentor .description{
     width: 50%;
@@ -72,16 +73,18 @@ body{
 }
 #new-mentor img{
     border-radius: 50%;
-    width: 100%;
+    width: 15vh;
+    height: 15vh;
 }
 .new-mentor{
     width: 80%;
     height: 35%;
-    border: 1px solid rgb(0, 63, 18);
     margin: 2% auto;
     padding: 1%;
     border-radius: 5px;
     display: flex;
+    box-shadow: 3px 3px 5px 5px rgb(0, 63, 18);
+    background-color: whitesmoke;
 }
 .new-mentor .description{
     width: 80%;
@@ -93,9 +96,13 @@ body{
 }
 .new-mentor img{
     border-radius: 50%;
-    width: 60%;
+    width: 15vh;
+    height: 15vh;
 }
 .new-mentor button{
+    visibility: hidden;
+}
+.new-mentor span{
     visibility: hidden;
 }
 #back{
@@ -156,9 +163,11 @@ body{
         text-align: center;
     }
     .ContactUs{
+        padding-top: 30px;
         margin: 0;
     }
     .FollowUs{
+        padding-top: 30px;
         margin: 0;
     }
  }
@@ -180,7 +189,4 @@ body{
         background-color:  rgb(255, 255, 255, 0.6);
         border-top: solid 3px rgb(0, 63, 18);
     }
- }
- @media screen and (max-width: 500px){
-
  }
