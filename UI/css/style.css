@@ -46,9 +46,10 @@ body{
     height: 40%;
     border-radius: 10px;
     text-align: center;
-    border: 1px solid rgb(0, 63, 18) ;
     margin-top: 20%;
     padding: 3%;
+    box-shadow: 3px 3px 5px 5px rgb(0, 63, 18);
+    background-color: whitesmoke;
 }
 .about{
     width: 80vh;
@@ -137,9 +138,11 @@ body{
         text-align: center;
     }
     .ContactUs{
+        padding-top: 30px;
         margin: 0;
     }
     .FollowUs{
+        padding-top: 30px;
         margin: 0;
     }
      .container{

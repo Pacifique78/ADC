@@ -9,7 +9,7 @@ signBtn.addEventListener('click', ()=>{
         window.location.assign("../html/user-page.html");
     }
     else if(statusInput.value.toLowerCase() == "mentor"){
-        window.location.assign("../html/mentors-page.html");
+        window.location.assign("../html/Mentors-page.html");
     }
     else{
         alert("Unknown status");

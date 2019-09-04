@@ -53,8 +53,8 @@ body{
     margin: 200px auto;
     background-color: #fff;
     border-radius: 30px;
-    box-sizing: border-box;
     padding: 2%;
+    box-shadow: 3px 3px 5px 5px rgb(0, 63, 18);
 
 }
 input{
@@ -134,9 +134,11 @@ input{
         text-align: center;
     }
     .ContactUs{
+        padding-top: 30px;
         margin: 0;
     }
     .FollowUs{
+        padding-top: 30px;
         margin: 0;
     }
  }
