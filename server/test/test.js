@@ -139,12 +139,23 @@ describe('Become a mentor', ()=>{
         })
         done();
     })
-    it('Should allow a user to to become a mentor', (done)=>{
+    it('Should not allow a user to to become a mentor: Invalid user Id', (done)=>{
         const userId= 300;
         chai.request(app).patch(`/api/v1/user/${userId}`) 
         .end((err, res) => {
             expect(res).to.have.status(404);
             expect(res.body).to.have.property('error')
+        })
+        done();
+    })
+})
+//getAllMentors
+describe('Get all mentors', ()=>{
+    it('Should should return all mentors', (done)=>{
+        chai.request(app).get('/api/v1/mentors') 
+        .end((err, res) => {
+            expect(res).to.have.status(201);
+            expect(res.body).to.have.property('message')
         })
         done();
     })
