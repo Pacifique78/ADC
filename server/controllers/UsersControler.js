@@ -3,6 +3,8 @@ import Joi from '@hapi/joi';
 import users from '../model/userModel';
 import loginUserSchema from '../joi_schemas/loginUserSchema';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import secret from '../config/config';
 
 class usersClass{
     createUser(req,res){
@@ -34,15 +36,19 @@ class usersClass{
                     newUser.password = hash;
                     users.push(newUser);
                   });
+                let token = jwt.sign({email: newUser.email}, secret, {
+                    expiresIn: '24h'
+                })
                 return res.status(200).json({
                 status: 200,
                 message: "user created",
                 data: {
-                    "fName": newUser.fName,
-                    "lName": newUser.lName,
+                    "firstName": newUser.firstName,
+                    "lastName": newUser.lastName,
                     "email": newUser.email,
                     "status": newUser.status
-                }
+                },
+                token:token
             });
             }
             
@@ -67,23 +73,30 @@ class usersClass{
     
             const userFound= users.find(user=>user.email===Email);
             if(userFound){
-                if(userFound.password===Password){
-                    return res.status(200).json({
-                        status: 200,
-                        message: "User logged in",
-                        data: {
-                            fName: userFound.fName,
-                            lName: userFound.lName,
-                            email: userFound.email,
-                            status: userFound.status
-                        }
-                    });
-                }else{
-                    return res.status(400).json({
-                        status: 400,
-                        error: "incorrect password",
-                    });
-                }
+                bcrypt.compare(Password, userFound.password, (err, result)=>{
+                    if(result === true){
+                        let token = jwt.sign({email: Email}, secret, {
+                            expiresIn: '24h'
+                        })
+                        return res.status(200).json({
+                            status: 200,
+                            message: "User logged in",
+                            data: {
+                                firstName: userFound.fName,
+                                lastName: userFound.lName,
+                                email: userFound.email,
+                                status: userFound.status
+                            },
+                            token:token
+                        });
+                    }else{
+                        return res.status(400).json({
+                            status: 400,
+                            error: "incorrect password",
+                        });
+                    }
+
+                })
             }else{
                 return res.status(400).json({
                     status: 400,

@@ -29,6 +29,7 @@
     "babel-loader": "^8.0.6",
     "bcrypt": "^3.0.6",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^6.2.0"
   },
   "devDependencies": {
