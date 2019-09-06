@@ -217,49 +217,49 @@ describe('Create a mentorship session', ()=>{
     })
 })
 //accept a session
-// describe('Accept mentorship session request', ()=>{
-//     it('Should return a success: request accepted', (done)=>{
-//         const sessionId = 1;
-//         chai.request(app).patch(`/api/v1/sessions/:${sessionId}/accept`) 
-//         .end((err, res) => {
-//             expect(res).to.have.status(201);
-//             expect(res.body).to.have.property('message');
-//             expect(res.body.data).to.be.a("object");
-//         })
-//         done();
-//     })
-//     it('Should return an error: invalid sessionId', (done)=>{
-//         const sessionId = 500;
-//         chai.request(app).patch(`/api/v1/sessions/:${sessionId}/accept`) 
-//         .end((err, res) => {
-//             expect(res).to.have.status(404);
-//             expect(res.body).to.have.property('error')
-//         })
-//         done();
-//     })
-// })
+describe('Accept mentorship session request', ()=>{
+    it('Should return a success: request accepted', (done)=>{
+        const sessionId = 1;
+        chai.request(app).patch(`/api/v1/sessions/${sessionId}/accept`) 
+        .end((err, res) => {
+            expect(res).to.have.status(201);
+            expect(res.body).to.have.property('message');
+            expect(res.body.data).to.be.a("object");
+        })
+        done();
+    })
+    it('Should return an error: invalid sessionId', (done)=>{
+        const sessionId = 500;
+        chai.request(app).patch(`/api/v1/sessions/${sessionId}/accept`) 
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error')
+        })
+        done();
+    })
+})
 //reject a session
-// describe('Reject mentorship session request', ()=>{
-//     it('Should return a success: request rejected', (done)=>{
-//         const sessionId = 1;
-//         chai.request(app).patch(`/api/v1/sessions/:${sessionId}/reject`) 
-//         .end((err, res) => {
-//             expect(res).to.have.status(201);
-//             expect(res.body).to.have.property('message');
-//             expect(res.body.data).to.be.a("object");
-//         })
-//         done();
-//     })
-//     it('Should return an error: invalid sessionId', (done)=>{
-//         const sessionId = 500;
-//         chai.request(app).patch(`/api/v1/sessions/:${sessionId}/reject`) 
-//         .end((err, res) => {
-//             expect(res).to.have.status(404);
-//             expect(res.body).to.have.property('error')
-//         })
-//         done();
-//     })
-// })
+describe('Reject mentorship session request', ()=>{
+    it('Should return a success: request rejected', (done)=>{
+        const sessionId = 1;
+        chai.request(app).patch(`/api/v1/sessions/${sessionId}/reject`) 
+        .end((err, res) => {
+            expect(res).to.have.status(201);
+            expect(res.body).to.have.property('message');
+            expect(res.body.data).to.be.a("object");
+        })
+        done();
+    })
+    it('Should return an error: invalid sessionId', (done)=>{
+        const sessionId = 500;
+        chai.request(app).patch(`/api/v1/sessions/${sessionId}/reject`) 
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error')
+        })
+        done();
+    })
+})
 //view sessions
 describe('get sessions', ()=>{
     it('Should return an error: User did not create a session', (done)=>{
