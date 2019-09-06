@@ -11,4 +11,5 @@ router.get('/api/v1/mentors/:mentorId', newclass.getSpecificMentor);
 router.post('/api/v1/sessions', newclass.createMentorshipSession);
 router.patch('/api/v1/sessions/:sessionId/accept', newclass.acceptMentorShipRequest);
 router.patch('/api/v1/sessions/:sessionId/reject', newclass.rejectMentorShipRequest);
+router.get('/api/v1/sessions', newclass.getSession);
 export default router;
