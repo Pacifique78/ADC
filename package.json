@@ -40,6 +40,10 @@
     "nodemon": "^1.19.2",
     "nyc": "^14.1.1"
   },
+  "engines": {
+    "node": "5.0.0",
+    "npm": "4.6.1"
+    },
   "devDependencies": {
     "mocha": "^6.2.0",
     "chai": "^4.2.0",
