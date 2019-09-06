@@ -268,8 +268,8 @@ class usersClass{
         }
     }
     rejectMentorShipRequest(req, res){
-        const sessionId = parseInt(req.params.sessionId);
-        const sessionFound = sessions.find(session=>session.sessionId===sessionId);
+        const sessionid = parseInt(req.params.sessionId);
+        const sessionFound = sessions.find(session=>session.sessionId===sessionid);
         if(!sessionFound){
             return res.status(404).json({
                 status: 404,
