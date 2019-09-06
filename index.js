@@ -7,6 +7,9 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());// to create post request
 app.use(bodyParser.urlencoded({extended:false}));
+app.get('/', (req, res) => {
+    return res.send('WELCOME TO FREE MENTORS');
+})
 
 app.use(router);
 const port= process.env.PORT || 6003;
