@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import secret from '../config/config';
 import sessions from '../model/sessionModel';
+import { request } from 'http';
 
 class usersClass{
     createUser(req,res){
@@ -282,6 +283,52 @@ class usersClass{
                 message: "Mentorship session was rejected",
                 data: sessionFound
             })
+        }
+    }
+    getSession(req,res){
+        if(req.body.status === "mentee"){
+            const id = req.body.id;
+            const sessionsFound = [];
+            for(let session of sessions){
+                if(session.menteeId === id){
+                    sessionsFound.push(session);
+                }
+            }
+            if(sessionsFound.length == 0){
+                return res.status(404).json({
+                    status: 404,
+                    error: "Mentee with such Id didn't create any session"
+                })
+            }
+            else{
+                return res.status(201).json({
+                    status: 201,
+                    message: "session(s) found",
+                    data: sessionsFound
+                })
+            }
+        }
+        if(req.body.status === "mentor"){
+            const id = req.body.id;
+            const sessionsFound = [];
+            for(let session of sessions){
+                if(session.mentorId === id){
+                    sessionsFound.push(session);
+                }
+            }
+            if(sessionsFound.length == 0){
+                return res.status(404).json({
+                    status: 404,
+                    error: "There no session created for this mentor"
+                })
+            }
+            else{
+                return res.status(201).json({
+                    status: 201,
+                    message: "session(s) found",
+                    data: sessionsFound
+                })
+            }
         }
     }
 }
