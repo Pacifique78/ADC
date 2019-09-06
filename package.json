@@ -41,8 +41,8 @@
     "nyc": "^14.1.1"
   },
   "engines": {
-    "node": "5.0.0",
-    "npm": "4.6.1"
+    "node": "10.16.2",
+    "npm": "6.9.0"
     },
   "devDependencies": {
     "mocha": "^6.2.0",
