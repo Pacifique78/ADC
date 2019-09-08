@@ -7,6 +7,8 @@ import jwt from 'jsonwebtoken';
 import secret from '../config/config';
 import sessions from '../model/sessionModel';
 import createSessionSchema from '../joi_schemas/createSessionSchema';
+import reviews from '../model/reviewModel';
+import reviewMentorSchema from '../joi_schemas/reviewMentorSchema'
 
 class usersClass{
     createUser(req,res){
@@ -51,6 +53,8 @@ class usersClass{
                   });
                 let token = jwt.sign({
                     id: newUser.id,
+                    firstName: newUser.firstName,
+                    lastName: newUser.lastName,
                     email: newUser.email,
                     status: newUser.status
                 }, secret, {
@@ -100,6 +104,8 @@ class usersClass{
                     if(result === true){
                         let token = jwt.sign({
                             id: userFound.id,
+                            firstName: userFound.firstName,
+                            lastName: userFound.lastName,
                             email: userFound.email,
                             status: userFound.status
                         }, secret, {
@@ -358,6 +364,44 @@ class usersClass{
                     status: 200,
                     message: "session(s) found",
                     data: sessionsFound
+                })
+            }
+        }
+    }
+    reviewMentor(req,res){
+        const  schemasValidation=Joi.validate(req.body, reviewMentorSchema);
+        if(schemasValidation.error){
+            const validationErrors=[];
+            for(let i=0; i<schemasValidation.error.details.length;i++){
+                validationErrors.push(schemasValidation.error.details[i].message.split('"').join(" "));
+            }
+            return res.status(400).json({
+                status: 400,
+                error: validationErrors[0]
+            });
+        }else{
+            const sessionid = parseInt(req.params.sessionId);
+            const sessionFound = sessions.find(session=>session.sessionId === sessionid);
+            if(!sessionFound){
+                return res.status(404).json({
+                    status:404,
+                    error: "there is no session with such id"
+                })
+            }
+            else{
+                const reviewCreated = {
+                    reviewId: reviews.length+1,
+                    mentorId: sessionFound.mentorId,
+                    menteeId: sessionFound.menteeId,
+                    score: req.body.score,
+                    menteeFullName: `${req.tokenData.firstName} ${req.tokenData.lastName}`,
+                    remark: req.body.remark
+                }
+                reviews.push(reviewCreated);
+                return res.status(201).json({
+                    status: 201,
+                    message: "review created successfully",
+                    data: reviewCreated
                 })
             }
         }

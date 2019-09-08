@@ -490,3 +490,70 @@ describe('get sessions', ()=>{
         done();
     })
 })
+describe('Create session review', () => {
+    it('Should allow a user to cerate a session review: Riview created successfully', (done) => {
+        const testObject = {
+            score: 2,
+            remark: "dhsvb ubeuiafdv pbdfufcg"
+        }
+        const sessionId = 1;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjE1NjgwMTU1OTZ9.MKyMx4S3CXBS5hpSf1wXrfkcqm9zepBl4dYbhs1oxWs";
+        chai.request(app).post(`/api/v1/sessions/${sessionId}/review`)
+        .set('Authorization', token)
+        .send(testObject)
+        .end((err, res) => {
+            expect(res).to.have.status(201);
+            expect(res.body).to.have.property('message');
+            expect(res.body.data).to.be.a('object');
+        })
+        done();
+    })
+    it('Should Not allow a user to cerate a session review: Session id not found', (done) => {
+        const testObject1 = {
+            score: 2,
+            remark: "dhsvb ubeuiafdv pbdfufcg"
+        }
+        const sessionId1 = 100;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjE1NjgwMTU1OTZ9.MKyMx4S3CXBS5hpSf1wXrfkcqm9zepBl4dYbhs1oxWs";
+        chai.request(app).post(`/api/v1/sessions/${sessionId1}/review`)
+        .set('Authorization', token)
+        .send(testObject1)
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+        })
+        done();
+    })
+    it('Should allow a user to cerate a session review: Invalid data', (done) => {
+        const testObject2 = {
+            score: 10,
+            remark: "dhsvb ubeuiafdv pbdfufcg"
+        }
+        const sessionId2 = 1;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjE1NjgwMTU1OTZ9.MKyMx4S3CXBS5hpSf1wXrfkcqm9zepBl4dYbhs1oxWs";
+        chai.request(app).post(`/api/v1/sessions/${sessionId2}/review`)
+        .set('Authorization', token)
+        .send(testObject2)
+        .end((err, res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.have.property('error');
+        })
+        done();
+    })
+    it('Should allow a user to cerate a session review: token not provided', (done) => {
+        const testObject3 = {
+            score: 2,
+            remark: "dhsvb ubeuiafdv pbdfufcg"
+        }
+        const sessionId3 = 1;
+        const token = "";
+        chai.request(app).post(`/api/v1/sessions/${sessionId3}/review`)
+        .set('Authorization', token)
+        .send(testObject3)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+        })
+        done();
+    })
+})
