@@ -1,8 +1,8 @@
 
 const sessions = [{
     sessionId: 1,
-    mentorId: 5,
-    menteeId: 10,
+    mentorId: 2,
+    menteeId: 3,
     questions: "whatsapp",
     menteeEmail: "qwer@gmail.com",
     status: "Request submited"
