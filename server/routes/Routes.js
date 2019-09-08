@@ -14,5 +14,6 @@ router.post('/api/v1/sessions', authentication, newclass.createMentorshipSession
 router.patch('/api/v1/sessions/:sessionId/accept', [authentication, checkMentor], newclass.acceptMentorShipRequest);
 router.patch('/api/v1/sessions/:sessionId/reject', [authentication, checkMentor], newclass.rejectMentorShipRequest);
 router.get('/api/v1/sessions', authentication, newclass.getSession);
-router.post('/api/v1/sessions/:sessionId/review', authentication, newclass.reviewMentor)
+router.post('/api/v1/sessions/:sessionId/review', authentication, newclass.reviewMentor);
+router.delete('/api/v1/sessions/:sessionId/review', [authentication, checkAdmin], newclass.deleteReview);
 export default router;

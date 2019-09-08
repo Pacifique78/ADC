@@ -406,6 +406,24 @@ class usersClass{
             }
         }
     }
+    deleteReview(req,res){
+        const sessionid = parseInt(req.params.sessionId);
+        const sessionFound = sessions.find(session=>session.sessionId === sessionid);
+        if(!sessionFound){
+            return res.status(404).json({
+                status:404,
+                error: "there is no session with such id"
+            })
+        }
+        else{
+            const reviewFound = reviews.findIndex(review => review.sessionId === sessionid);
+            reviews.splice(reviewFound, 1);
+            return res.status(200).json({
+                status: 200,
+                message: "review successfully deleted"
+            })
+        }
+    }
 }
 
 const newclass= new usersClass();
