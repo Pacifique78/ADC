@@ -55,7 +55,7 @@ export const createTable = () => {
     VALUES(2, 3, 4, 3, 'Peter Okabo', 'fjjcbvjdfbvjfbvbfvhdhvjfbsvui');
     `
     pool.query(createTablesQuerry)
-    .then((res) => console.log(res))
+    .then((res) => console.log("Database tables set successfully..."))
     .catch((err) => {
         console.log(err);
         pool.end();

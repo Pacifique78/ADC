@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 chai.use(chaiHttp);
 
 describe('Welcome Home page', () => {
-    it('Should should return a welcome text', (done) => {
+    it('Should return a welcome text', (done) => {
         chai.request(app).get('/')
         .end((err, res) => {
             expect(res);
@@ -26,7 +26,7 @@ describe('User SignUp', ()=>{
             "occupation":"occupation",
             "expertise":"expertise"
         };
-        chai.request(app).post('/api/v1/auth/signup')
+        chai.request(app).post('/api/v2/auth/signup')
         .send(testUser)
         .end((err, res) => {
             expect(res).to.have.status(201);
@@ -48,7 +48,7 @@ describe('User SignUp', ()=>{
             "occupation":"occupation",
             "expertise":"expertise"
         };
-        chai.request(app).post('/api/v1/auth/signup')
+        chai.request(app).post('/api/v2/auth/signup')
         .send(testUser3)
         .end((err, res) => {
             expect(res).to.have.status(400);
@@ -67,7 +67,7 @@ describe('User SignUp', ()=>{
             "occupation":"occupation",
             "expertise":"expertise"
         };
-        chai.request(app).post('/api/v1/auth/signup')
+        chai.request(app).post('/api/v2/auth/signup')
         .send(testUser1)
         .end((err, res) => {
             expect(res).to.have.status(409);

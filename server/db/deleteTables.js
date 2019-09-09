@@ -10,7 +10,7 @@ export const deleteTable = () => {
     DROP TABLE IF EXISTS sessions CASCADE;
     DROP TABLE IF EXISTS REVIEWS CASCADE;`
     pool.query(deleteTablesQuerry)
-    .then((res) => console.log(res))
+    .then((res) => console.log("All tables deleted successfully..."))
     .catch((err) => {
         console.log(err);
         pool.end();

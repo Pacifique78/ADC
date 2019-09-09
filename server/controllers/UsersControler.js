@@ -8,7 +8,9 @@ import secret from '../config/config';
 import sessions from '../model/sessionModel';
 import createSessionSchema from '../joiSchemas/createSessionSchema';
 import reviews from '../model/reviewModel';
-import reviewMentorSchema from '../joiSchemas/reviewMentorSchema'
+import reviewMentorSchema from '../joiSchemas/reviewMentorSchema';
+import poll from '../db/createTables';
+import pool from '../db/createTables';
 
 class usersClass{
     createUser(req,res){
@@ -24,56 +26,58 @@ class usersClass{
             });
         }
         else{
-            const Email= req.body.email;
-            const userFound= users.find(user=>user.email===Email);
-            if(userFound){
-                return res.status(409).json({
-                    status:409,
-                    error: "user with such email already exists"
+            pool.connect((err, client, done) => {
+                const {email}= req.body;
+                const selectQuerry = `SELECT * FROM users WHERE email= $1`;
+                const value=[email];
+                client.query(selectQuerry, value, (err, result) => {
+                    if(result.rows[0]){
+                        return res.status(409).json({
+                            status: 409,
+                            error: "User with such email already exists"
+                        })
+                    }
+                    else{
+                        const {firstName, lastName, email, password, address, bio, occupation, expertise} = req.body;
+                        const status = "mentee";
+                        const saltRounds = 10;
+                        bcrypt.hash(password, saltRounds, (err, hash) => {
+                            const passWord = hash;
+                            const insertQuerry = `INSERT INTO users 
+                            (firstName, lastName, email, password, status, address, bio, occupation, expertise)
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
+                            const values = [firstName, lastName, email, passWord, status, address, bio, occupation, expertise];
+                            client.query(insertQuerry, values, (err, results) => {
+                                if(results.rows[0]){
+                                    const id = results.rows[0].id;
+                                    let token = jwt.sign({
+                                        id,firstName,lastName,email,status
+                                    }, secret, {
+                                        expiresIn: '24h'
+                                    })
+                                    return res.status(201).json({
+                                        status:201,
+                                        message: "User created",
+                                        data: {
+                                            id:results.rows[0].id,
+                                            firstName,
+                                            lastName,
+                                            email,
+                                            status: results.rows[0].status,
+                                            address,
+                                            bio,
+                                            occupation,
+                                            expertise
+                                        },
+                                        token
+                                    })
+                                }
+                            })
+                        });
+                        
+                    }
                 })
-            }
-            else{
-                const {firstName, lastName, email, password, address, bio, occupation, expertise} = req.body;
-                const newUser={
-                    id: users.length+1,
-                    firstName,
-                    lastName,
-                    email,
-                    password,
-                    status: "mentee",
-                address,
-                bio,
-                occupation,
-                expertise
-            }
-                const saltRounds = 10;
-                const passWord = newUser.password;
-                bcrypt.hash(passWord, saltRounds, (err, hash) => {
-                    newUser.password = hash;
-                    users.push(newUser);
-                  });
-                let token = jwt.sign({
-                    id: newUser.id,firstName,lastName,email,status: newUser.status
-                }, secret, {
-                    expiresIn: '24h'
-                })
-                return res.status(201).json({
-                status: 201,
-                message: "user created",
-                data: {
-                    id:users.length+1,
-                    firstName,
-                    lastName,
-                    email,
-                    status: newUser.status,
-                    address,
-                    bio,
-                    occupation,
-                    expertise
-                },
-                token
-            });
-            }
+            })
         }
     }
     Login(req, res){
