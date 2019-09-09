@@ -1,14 +1,14 @@
-import createUserSchema from '../joi_schemas/createUserSchema';
+import createUserSchema from '../joiSchemas/createUserSchema';
 import Joi from '@hapi/joi';
 import users from '../model/userModel';
-import loginUserSchema from '../joi_schemas/loginUserSchema';
+import loginUserSchema from '../joiSchemas/loginUserSchema';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import secret from '../config/config';
 import sessions from '../model/sessionModel';
-import createSessionSchema from '../joi_schemas/createSessionSchema';
+import createSessionSchema from '../joiSchemas/createSessionSchema';
 import reviews from '../model/reviewModel';
-import reviewMentorSchema from '../joi_schemas/reviewMentorSchema'
+import reviewMentorSchema from '../joiSchemas/reviewMentorSchema'
 
 class usersClass{
     createUser(req,res){
@@ -33,18 +33,19 @@ class usersClass{
                 })
             }
             else{
+                const {firstName, lastName, email, password, address, bio, occupation, expertise} = req.body;
                 const newUser={
                     id: users.length+1,
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email,
-                    password: req.body.password,
+                    firstName,
+                    lastName,
+                    email,
+                    password,
                     status: "mentee",
-                    address: req.body.address,
-                    bio: req.body.bio,
-                    occupation: req.body.occupation,
-                    expertise: req.body.expertise
-                }
+                address,
+                bio,
+                occupation,
+                expertise
+            }
                 const saltRounds = 10;
                 const passWord = newUser.password;
                 bcrypt.hash(passWord, saltRounds, (err, hash) => {
@@ -52,11 +53,7 @@ class usersClass{
                     users.push(newUser);
                   });
                 let token = jwt.sign({
-                    id: newUser.id,
-                    firstName: newUser.firstName,
-                    lastName: newUser.lastName,
-                    email: newUser.email,
-                    status: newUser.status
+                    id: newUser.id,firstName,lastName,email,status: newUser.status
                 }, secret, {
                     expiresIn: '24h'
                 })
@@ -64,24 +61,21 @@ class usersClass{
                 status: 201,
                 message: "user created",
                 data: {
-                    "id":users.length+1,
-                    "firstName": newUser.firstName,
-                    "lastName": newUser.lastName,
-                    "email": newUser.email,
-                    "status": newUser.status,
-                    "address":newUser.address,
-                    "bio":newUser.bio,
-                    "occupation":newUser.occupation,
-                    "expertise":newUser.expertise
+                    id:users.length+1,
+                    firstName,
+                    lastName,
+                    email,
+                    status: newUser.status,
+                    address,
+                    bio,
+                    occupation,
+                    expertise
                 },
-                token:token
+                token
             });
             }
-            
         }
-        
     }
-
     Login(req, res){
         const schemasValidation = Joi.validate(req.body, loginUserSchema);
         if(schemasValidation.error){
@@ -100,14 +94,15 @@ class usersClass{
     
             const userFound= users.find(user=>user.email===Email);
             if(userFound){
+                const {id, firstName, lastName, email, status, address, bio, occupation, expertise} = userFound;
                 bcrypt.compare(Password, userFound.password, (err, result)=>{
                     if(result === true){
                         let token = jwt.sign({
-                            id: userFound.id,
-                            firstName: userFound.firstName,
-                            lastName: userFound.lastName,
-                            email: userFound.email,
-                            status: userFound.status
+                            id,
+                            firstName,
+                            lastName,
+                            email,
+                            status
                         }, secret, {
                             expiresIn: '24h'
                         })
@@ -115,17 +110,17 @@ class usersClass{
                             status: 200,
                             message: "User logged in",
                             data: {
-                                id: userFound.id,
-                                firstName: userFound.firstName,
-                                lastName: userFound.lastName,
-                                email: userFound.email,
-                                status: userFound.status,
-                                address: userFound.address,
-                                bio: userFound.bio,
-                                occupation: userFound.occupation,
-                                expertise: userFound.expertise
+                                id,
+                                firstName,
+                                lastName,
+                                email,
+                                status,
+                                address,
+                                bio,
+                                occupation,
+                                expertise
                             },
-                            token:token
+                            token
                         });
                     }else{
                         return res.status(404).json({
@@ -170,17 +165,18 @@ class usersClass{
     getAllMentors(req,res){
         const mentors = [];
         for(let mentor of users){
+            const {id, firstName, lastName, email, status, address, bio, occupation, expertise} = mentor;
             if(mentor.status === "mentor"){
                 let mentorFound = {
-                    id: mentor.id,
-                    firstName: mentor.firstName,
-                    lastName: mentor.lastName,
-                    email: mentor.email,
-                    status: mentor.status,
-                    address: mentor.address,
-                    bio: mentor.bio,
-                    occupation: mentor.occupation,
-                    expertise: mentor.expertise
+                    id,
+                    firstName,
+                    lastName,
+                    email,
+                    status,
+                    address,
+                    bio,
+                    occupation,
+                    expertise
                 }
                 mentors.push(mentorFound);
             }
@@ -207,16 +203,17 @@ class usersClass{
             })
         }
         else{
+            const {id,firstName,lastName,email,status,address,bio,occupation,expertise} = mentorFound;
             const mentor = {
-                id: mentorFound.id,
-                firstName: mentorFound.firstName,
-                lastName: mentorFound.lastName,
-                email: mentorFound.email,
-                status: mentorFound.status,
-                address: mentorFound.address,
-                bio: mentorFound.bio,
-                occupation: mentorFound.occupation,
-                expertise: mentorFound.expertise
+                id,
+                firstName,
+                lastName,
+                email,
+                status,
+                address,
+                bio,
+                occupation,
+                expertise
             }
             return res.status(200).json({
                 status: 200,
@@ -237,7 +234,7 @@ class usersClass{
                 error: validationErrors[0]
             });
         }else{
-            const mentorId = req.body.mentorId;
+            const {mentorId, questions} = req.body;
             const mentors = [];
             for(let user of users){
                 if(user.status === "mentor"){
@@ -252,12 +249,13 @@ class usersClass{
                 })
             }
             else{
+                const {id:menteeId, email:menteeEmail} = req.tokenData;
                 const sessionCreated = {
                     sessionId: sessions.length+1,
-                    mentorId: mentorId,
-                    menteeId: req.tokenData.id,
-                    questions: req.body.questions,
-                    menteeEmail: req.tokenData.email,
+                    mentorId,
+                    menteeId,
+                    questions,
+                    menteeEmail,
                     status: "Request submited"
                 }
                 sessions.push(sessionCreated);
@@ -389,13 +387,16 @@ class usersClass{
                 })
             }
             else{
+                const {mentorId, menteeId} = sessionFound;
+                const {score, remark} = req.body;
+                const {firstName, lastName} = req.tokenData;
                 const reviewCreated = {
                     reviewId: reviews.length+1,
-                    mentorId: sessionFound.mentorId,
-                    menteeId: sessionFound.menteeId,
-                    score: req.body.score,
-                    menteeFullName: `${req.tokenData.firstName} ${req.tokenData.lastName}`,
-                    remark: req.body.remark
+                    mentorId,
+                    menteeId,
+                    score,
+                    menteeFullName: `${firstName} ${lastName}`,
+                    remark
                 }
                 reviews.push(reviewCreated);
                 return res.status(201).json({
