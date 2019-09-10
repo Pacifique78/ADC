@@ -124,10 +124,16 @@ class usersClass{
                                     token
                                 })
                             }
+                            else{
+                                return res.status(404).json({
+                                    status: 404,
+                                    error: "Incorrect email/password"
+                                })
+                            }
                         } )
                     }
                     else{
-                        return status(404).json({
+                        return res.status(404).json({
                             status: 404,
                             error: "Incorrect email/pasword"
                         })
