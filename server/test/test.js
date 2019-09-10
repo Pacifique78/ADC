@@ -84,7 +84,7 @@ describe('User Signin', ()=>{
             "email":"systemadmin@gmail.com",
             "password":"admin"
         };
-        chai.request(app).post('/api/v1/auth/signin')
+        chai.request(app).post('/api/v2/auth/signin')
         .send(testUser)
         .end((err, res) => {
             expect(res).to.have.status(200);
@@ -99,7 +99,7 @@ describe('User Signin', ()=>{
             "email":"userEmail12345@gmail.com",
             "password":"password"
         };
-        chai.request(app).post('/api/v1/auth/signin')
+        chai.request(app).post('/api/v2/auth/signin')
         .send(testUser3)
         .end((err, res) => {
             expect(res).to.have.status(404);
@@ -112,7 +112,7 @@ describe('User Signin', ()=>{
             "email":"systemadmin@gmail.com",
             "password":"password"
         };
-        chai.request(app).post('/api/v1/auth/signin')
+        chai.request(app).post('/api/v2/auth/signin')
         .send(testUser3)
         .end((err, res) => {
             expect(res).to.have.status(404);
@@ -125,7 +125,7 @@ describe('User Signin', ()=>{
             "email":"systemadmin@gmail.com",
             //"password":"password"
         };
-        chai.request(app).post('/api/v1/auth/signin')
+        chai.request(app).post('/api/v2/auth/signin')
         .send(testUser1)
         .end((err, res) => {
             expect(res).to.have.status(400);

@@ -6,7 +6,7 @@ import authentication from '../middleware/middleware';
 
 const router=express.Router(); 
 router.post('/api/v2/auth/signup',newclass.createUser);
-router.post('/api/v1/auth/signin',newclass.Login);
+router.post('/api/v2/auth/signin',newclass.Login);
 router.patch('/api/v1/user/:userId', [authentication, checkAdmin], newclass.becomeMentor);
 router.get('/api/v1/mentors', authentication, newclass.getAllMentors);
 router.get('/api/v1/mentors/:mentorId', authentication, newclass.getSpecificMentor);

@@ -44,7 +44,7 @@ class usersClass{
                         bcrypt.hash(password, saltRounds, (err, hash) => {
                             const passWord = hash;
                             const insertQuerry = `INSERT INTO users 
-                            (firstName, lastName, email, password, status, address, bio, occupation, expertise)
+                            ("firstName", "lastName", email, password, status, address, bio, occupation, expertise)
                             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
                             const values = [firstName, lastName, email, passWord, status, address, bio, occupation, expertise];
                             client.query(insertQuerry, values, (err, results) => {
@@ -93,54 +93,47 @@ class usersClass{
             });
         }
         else{
-            const Password= req.body.password;
-            const Email= req.body.email;
-    
-            const userFound= users.find(user=>user.email===Email);
-            if(userFound){
-                const {id, firstName, lastName, email, status, address, bio, occupation, expertise} = userFound;
-                bcrypt.compare(Password, userFound.password, (err, result)=>{
-                    if(result === true){
-                        let token = jwt.sign({
-                            id,
-                            firstName,
-                            lastName,
-                            email,
-                            status
-                        }, process.env.secret, {
-                            expiresIn: '24h'
-                        })
-                        return res.status(200).json({
-                            status: 200,
-                            message: "User logged in",
-                            data: {
-                                id,
-                                firstName,
-                                lastName,
-                                email,
-                                status,
-                                address,
-                                bio,
-                                occupation,
-                                expertise
-                            },
-                            token
-                        });
-                    }else{
-                        return res.status(404).json({
-                            status: 404,
-                            error: "incorrect password",
-                        });
+            pool.connect((err, client, done) => {
+                const {email, password} = req.body;
+                const selectQuerry = `SELECT * FROM users WHERE email=$1`;
+                const value = [email];
+                client.query(selectQuerry, value, (err, result) => {
+                    if(result.rows[0]){
+                        bcrypt.compare(password, result.rows[0].password,(err, passwordResult) =>{
+                            if(passwordResult === true){
+                                const {id, firstName, lastName, email ,status, address, bio, occupation, expertise} = result.rows[0];
+                                const token = jwt.sign({
+                                    id, firstName, lastName, email, status
+                                }, process.env.secret, {
+                                    expiresIn: '24h'
+                                })
+                                return res.status(200).json({
+                                    status: 200,
+                                    message: "User logged in successfully",
+                                    data: {
+                                        id,
+                                        firstName,
+                                        lastName,
+                                        email,
+                                        status,
+                                        address,
+                                        bio,
+                                        occupation,
+                                        expertise
+                                    },
+                                    token
+                                })
+                            }
+                        } )
                     }
-
+                    else{
+                        return status(404).json({
+                            status: 404,
+                            error: "Incorrect email/pasword"
+                        })
+                    }
                 })
-            }else{
-                return res.status(404).json({
-                    status: 404,
-                    error: "User with such email not found",
-                });
-            }
-
+            })
         }
     }
     becomeMentor(req, res){
