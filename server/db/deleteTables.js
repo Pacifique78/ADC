@@ -1,9 +1,10 @@
 const {Pool} = require('pg');
 import dotenv from 'dotenv';
+import connect from '../db/config';
 dotenv.config();
-
+console.log(connect);
 const pool = new Pool({
-    connectionString:process.env.DATABASE_URL
+    connectionString:connect
 })
 export const deleteTable = () => {
     const deleteTablesQuerry = `
