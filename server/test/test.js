@@ -39,7 +39,7 @@ describe('User SignUp', ()=>{
     it('Should NOT allow a user to signup: Invalid data', (done)=>{
         const testUser3 = {
             "lastName":"lastName",
-            //"firstName":"firstName",
+            "firstName":"",
             "email":"userEmail@gmail.com",
             "password":"password",
             "status":"admin",
