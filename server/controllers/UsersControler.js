@@ -8,7 +8,6 @@ import reviewMentorSchema from '../joiSchemas/reviewMentorSchema';
 import pool from '../db/createTables';
 import dotenv from 'dotenv';
 dotenv.config();
-
 class usersClass{
     createUser(req,res){
         const  schemasValidation=Joi.validate(req.body, createUserSchema);
