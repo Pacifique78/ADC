@@ -138,7 +138,7 @@ describe('User Signin', ()=>{
 //Become a mentor
 describe('Become a mentor', ()=>{
     it('Should allow a user to to become a mentor', (done)=>{
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjoxNTY3OTc0NDE4fQ.rwGYAefTJrK1HSlD6DgZETaCrIDoSg3c6sq7OY8LX_E";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjo5OTk5OTc0NDE4fQ.wxE4C25XSe-rKkGfxLMAYxQqatFbvd952jnVcL_cUnQ";
         const userId = 3;
         chai.request(app).patch(`/api/v1/user/${userId}`) 
         .set('Authorization', token)
@@ -150,7 +150,7 @@ describe('Become a mentor', ()=>{
     })
     it('Should not allow a user to to become a mentor: Invalid user Id', (done)=>{
         const userId1= 300;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjoxNTY3OTc0NDE4fQ.rwGYAefTJrK1HSlD6DgZETaCrIDoSg3c6sq7OY8LX_E"
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjo5OTk5OTc0NDE4fQ.wxE4C25XSe-rKkGfxLMAYxQqatFbvd952jnVcL_cUnQ"
         chai.request(app).patch(`/api/v1/user/${userId1}`) 
         .set('Authorization',token)
         .end((err, res) => {
@@ -161,7 +161,7 @@ describe('Become a mentor', ()=>{
     })
     it('Should not allow a user to become a mentor: User is already a mentor', (done) =>{
         const userId2 = 2;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjoxNTY3OTc0NDE4fQ.rwGYAefTJrK1HSlD6DgZETaCrIDoSg3c6sq7OY8LX_E";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjo5OTk5OTc0NDE4fQ.wxE4C25XSe-rKkGfxLMAYxQqatFbvd952jnVcL_cUnQ";
         chai.request(app).patch(`/api/v1/user/${userId2}`)
         .set('Authorization', token)
         .end((err,res) => {
@@ -172,7 +172,7 @@ describe('Become a mentor', ()=>{
     })
     it('Should not allow a user to become a mentor: Your are not the admin', (done) => {
         const userId3 = 3;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4ODgwMTgsImV4cCI6MTU2Nzk3NDQxOH0.CKn8irwyByNBt-LLkvpLZAHQJmGVaTsb4WrddrwNsHE";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4ODgwMTgsImV4cCI6OTk5OTk3NDQxOH0.5X7nOODJmua64xSa2rLrdcML-eFs5SznUN-NFTz4ZK4";
         chai.request(app).patch(`/api/v1/user/${userId3}`)
         .set('Authorization', token)
         .end((err, res) => {
@@ -196,7 +196,7 @@ describe('Become a mentor', ()=>{
 //getAllMentors
 describe('Get all mentors', ()=>{
     it('Should should return all mentors', (done)=>{
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.QSCUeDXOkutUY1aVbClDPCcU7NoC8S_syDI0fhaIoCw";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
         chai.request(app).get('/api/v1/mentors') 
         .set('Authorization', token)
         .end((err, res) => {
@@ -220,7 +220,7 @@ describe('Get all mentors', ()=>{
 describe('Get specific mentor', ()=>{
     it('Should return mentor with the specified ID', (done)=>{
         const mentorId= 2;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.QSCUeDXOkutUY1aVbClDPCcU7NoC8S_syDI0fhaIoCw";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
         chai.request(app).get(`/api/v1/mentors/${mentorId}`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -232,7 +232,7 @@ describe('Get specific mentor', ()=>{
     })
     it('Should not return a mentor : Invalid mentorid', (done)=>{
         const mentorId= 300;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.QSCUeDXOkutUY1aVbClDPCcU7NoC8S_syDI0fhaIoCw";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
         chai.request(app).get(`/api/v1/mentors/${mentorId}`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -260,7 +260,7 @@ describe('Create a mentorship session', ()=>{
             "mentorId": 2,
             "questions": "Could you be my mentor"
         };
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.QSCUeDXOkutUY1aVbClDPCcU7NoC8S_syDI0fhaIoCw";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
         chai.request(app).post('/api/v1/sessions')
         .set('Authorization', token)
         .send(testUser1) 
@@ -276,7 +276,7 @@ describe('Create a mentorship session', ()=>{
         "mentorId":1000,
         "questions":"Could you be my mentor"
         };
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.QSCUeDXOkutUY1aVbClDPCcU7NoC8S_syDI0fhaIoCw";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
         chai.request(app).post('/api/v1/sessions') 
         .set('Authorization', token)
         .send(testUser2)
@@ -291,7 +291,7 @@ describe('Create a mentorship session', ()=>{
             "mentorId":true,
             "questions":"Could you be my mentor"
             };
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.QSCUeDXOkutUY1aVbClDPCcU7NoC8S_syDI0fhaIoCw";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
         chai.request(app).post('/api/v1/sessions')
         .set('Authorization', token)
         .send(testUser4)
@@ -320,7 +320,7 @@ describe('Create a mentorship session', ()=>{
 describe('Accept mentorship session request', ()=>{
     it('Should return a success: request accepted', (done)=>{
         const sessionId = 2;
-        const  token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.FAv7h12ftYyoQgaf9xegFaEyE9OsoD3WigSxZJGHgpk";
+        const  token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.V-CuhJy3AbuMSrIhtO8dBs5J5-NLhQdc98uz7bFiFhA";
         chai.request(app).patch(`/api/v1/sessions/${sessionId}/accept`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -332,7 +332,7 @@ describe('Accept mentorship session request', ()=>{
     })
     it('Should return an error: invalid sessionId', (done)=>{
         const sessionId = 500;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.9eb_rI5QTB1s2kFw2xNUO2UKCzrNmXUkkcs9oAZwRiI";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.JdDqHqlFJSvJTQFyfPy4qykgBP1ETID5-Y4I0qkBpRg";
         chai.request(app).patch(`/api/v1/sessions/${sessionId}/accept`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -342,7 +342,7 @@ describe('Accept mentorship session request', ()=>{
         done();
     })
     it('Should return an error: session not yours to accept', (done) => {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.9eb_rI5QTB1s2kFw2xNUO2UKCzrNmXUkkcs9oAZwRiI";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.JdDqHqlFJSvJTQFyfPy4qykgBP1ETID5-Y4I0qkBpRg";
         const sessionId =1;
         chai.request(app).patch(`/api/v1/sessions/${sessionId}/accept`)
         .set('Authorization', token)
@@ -353,7 +353,7 @@ describe('Accept mentorship session request', ()=>{
         done();
     })
     it('Should return an error: Your not a mentor', (done) => {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4ODgwMTgsImV4cCI6MTU2Nzk3NDQxOH0.CKn8irwyByNBt-LLkvpLZAHQJmGVaTsb4WrddrwNsHE";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4ODgwMTgsImV4cCI6OTk5OTk3NDQxOH0.5X7nOODJmua64xSa2rLrdcML-eFs5SznUN-NFTz4ZK4";
         const sessionId1 = 1;
         chai.request(app).patch(`/api/v1/sessions/${sessionId1}/accept`)
         .set('Authorization', token)
@@ -379,7 +379,7 @@ describe('Accept mentorship session request', ()=>{
 describe('Reject mentorship session request', ()=>{
     it('Should return a success: request rejected', (done)=>{
         const sessionId = 1;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.FAv7h12ftYyoQgaf9xegFaEyE9OsoD3WigSxZJGHgpk";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.V-CuhJy3AbuMSrIhtO8dBs5J5-NLhQdc98uz7bFiFhA";
         chai.request(app).patch(`/api/v1/sessions/${sessionId}/reject`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -391,7 +391,7 @@ describe('Reject mentorship session request', ()=>{
     })
     it('Should return an error: invalid sessionId', (done)=>{
         const sessionId = 500;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.FAv7h12ftYyoQgaf9xegFaEyE9OsoD3WigSxZJGHgpk";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.V-CuhJy3AbuMSrIhtO8dBs5J5-NLhQdc98uz7bFiFhA";
         chai.request(app).patch(`/api/v1/sessions/${sessionId}/reject`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -402,7 +402,7 @@ describe('Reject mentorship session request', ()=>{
     })
     it('Should return an error: NOt yours to reject', (done)=>{
         const sessionId = 1;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.9eb_rI5QTB1s2kFw2xNUO2UKCzrNmXUkkcs9oAZwRiI";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.JdDqHqlFJSvJTQFyfPy4qykgBP1ETID5-Y4I0qkBpRg";
         chai.request(app).patch(`/api/v1/sessions/${sessionId}/reject`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -412,7 +412,7 @@ describe('Reject mentorship session request', ()=>{
         done();
     })
     it('Should return an error: Your not a mentor', (done) => {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4ODgwMTgsImV4cCI6MTU2Nzk3NDQxOH0.o2hCoGaqJkeSR_-Nxxr5y-JR8qHSei3d51Lq7D9pLts";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4ODgwMTgsImV4cCI6OTk5OTk3NDQxOH0.dZuyI74_xeFecSgO1Da10CCrTPtR1Z006q8RFFEL50c";
         const sessionId1 = 1;
         chai.request(app).patch(`/api/v1/sessions/${sessionId1}/reject`)
         .set('Authorization', token)
@@ -437,7 +437,7 @@ describe('Reject mentorship session request', ()=>{
 //view sessions
 describe('get sessions', ()=>{
     it('Should return an error: User did not create a session', (done)=>{
-        const token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3ODkyNjY3LCJleHAiOjE1Njc5NzkwNjd9.aAPJasog6gL9-Y8JLBFuOTUSOwLsI3v5K0KpSLQP4Xw";
+        const token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3ODkyNjY3LCJleHAiOjk5OTk5NzkwNjd9.LOhCG1zi9xMDu7E9MXTdTRVin-LaAu3qErxEHRbauoM";
         chai.request(app).get(`/api/v1/sessions`)
         .set('Authorization', token)
         .end((err, res) => {
@@ -447,7 +447,7 @@ describe('get sessions', ()=>{
         done();
     })
     it('Should return a success: session(s) found', (done)=>{
-        const token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.QSCUeDXOkutUY1aVbClDPCcU7NoC8S_syDI0fhaIoCw";
+        const token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
         chai.request(app).get(`/api/v1/sessions`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -458,7 +458,7 @@ describe('get sessions', ()=>{
         done();
     })
     it('Should return an error: There is no session created for such mentor', (done)=>{
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.9eb_rI5QTB1s2kFw2xNUO2UKCzrNmXUkkcs9oAZwRiI";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.JdDqHqlFJSvJTQFyfPy4qykgBP1ETID5-Y4I0qkBpRg";
         chai.request(app).get(`/api/v1/sessions`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -468,7 +468,7 @@ describe('get sessions', ()=>{
         done();
     })
     it('Should return a success: session(s) found', (done)=>{
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6MTU2Nzk3OTA2N30.FAv7h12ftYyoQgaf9xegFaEyE9OsoD3WigSxZJGHgpk";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.V-CuhJy3AbuMSrIhtO8dBs5J5-NLhQdc98uz7bFiFhA";
         chai.request(app).get(`/api/v1/sessions`) 
         .set('Authorization', token)
         .end((err, res) => {
@@ -497,7 +497,7 @@ describe('Create session review', () => {
             remark: "dhsvb ubeuiafdv pbdfufcg"
         }
         const sessionId = 1;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjE1NjgwMTU1OTZ9.MKyMx4S3CXBS5hpSf1wXrfkcqm9zepBl4dYbhs1oxWs";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjk5OTk5MTU1OTZ9.yi3KaVUA81O8W3RhaRWfH8C5GML0nM3fpZnaHzgnrEo";
         chai.request(app).post(`/api/v1/sessions/${sessionId}/review`)
         .set('Authorization', token)
         .send(testObject)
@@ -514,7 +514,7 @@ describe('Create session review', () => {
             remark: "dhsvb ubeuiafdv pbdfufcg"
         }
         const sessionId1 = 100;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjE1NjgwMTU1OTZ9.MKyMx4S3CXBS5hpSf1wXrfkcqm9zepBl4dYbhs1oxWs";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjk5OTk5MTU1OTZ9.yi3KaVUA81O8W3RhaRWfH8C5GML0nM3fpZnaHzgnrEo";
         chai.request(app).post(`/api/v1/sessions/${sessionId1}/review`)
         .set('Authorization', token)
         .send(testObject1)
@@ -530,7 +530,7 @@ describe('Create session review', () => {
             remark: "dhsvb ubeuiafdv pbdfufcg"
         }
         const sessionId2 = 1;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjE1NjgwMTU1OTZ9.MKyMx4S3CXBS5hpSf1wXrfkcqm9zepBl4dYbhs1oxWs";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjk5OTk5MTU1OTZ9.yi3KaVUA81O8W3RhaRWfH8C5GML0nM3fpZnaHzgnrEo";
         chai.request(app).post(`/api/v1/sessions/${sessionId2}/review`)
         .set('Authorization', token)
         .send(testObject2)
@@ -560,7 +560,7 @@ describe('Create session review', () => {
 describe('Delete a session review deemed inappropriate:', () => {
     it('Should allow an admin to delete a session review: Riview deleted successfully', (done) => {
         const sessionId = 1;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2NzkyOTE5NiwiZXhwIjoxNTY4MDE1NTk2fQ.tzMeEyw8lW9OHE2uupgmU6TD1Lr0lFl4QSHbcMqr-rA";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2NzkyOTE5NiwiZXhwIjo5OTk5OTE1NTk2fQ.VxwviZS8qi4tw-e00eb2bU-Coe9mvtYFyC8cjUGNjsQ";
         chai.request(app).delete(`/api/v1/sessions/${sessionId}/review`)
         .set('Authorization', token)
         .end((err, res) => {
@@ -571,7 +571,7 @@ describe('Delete a session review deemed inappropriate:', () => {
     })
     it('Should Not delete a session review: Session id not found', (done) => {
         const sessionId1 = 100;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2NzkyOTE5NiwiZXhwIjoxNTY4MDE1NTk2fQ.tzMeEyw8lW9OHE2uupgmU6TD1Lr0lFl4QSHbcMqr-rA";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2NzkyOTE5NiwiZXhwIjo5OTk5OTE1NTk2fQ.VxwviZS8qi4tw-e00eb2bU-Coe9mvtYFyC8cjUGNjsQ";
         chai.request(app).delete(`/api/v1/sessions/${sessionId1}/review`)
         .set('Authorization', token)
         .end((err, res) => {
@@ -582,7 +582,7 @@ describe('Delete a session review deemed inappropriate:', () => {
     })
     it('Should not delete a session review: Only admin can di this', (done) => {
         const sessionId2 = 1;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc5MjkxOTYsImV4cCI6MTU2ODAxNTU5Nn0.lsmDlbi4Y-moy6OZrikxtQwEdCNdjKYjFzpYI6tSS4k";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc5MjkxOTYsImV4cCI6OTk5OTkxNTU5Nn0.CWRKJz_K6WDihFqSpFaC2XH4ED1H5n4OReWGhRg_5TA";
         chai.request(app).delete(`/api/v1/sessions/${sessionId2}/review`)
         .set('Authorization', token)
         .end((err, res) => {
