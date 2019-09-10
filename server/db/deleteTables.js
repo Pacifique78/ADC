@@ -2,7 +2,6 @@ const {Pool} = require('pg');
 import dotenv from 'dotenv';
 import connect from '../db/config';
 dotenv.config();
-console.log(connect);
 const pool = new Pool({
     connectionString:connect
 })

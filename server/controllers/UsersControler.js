@@ -25,7 +25,7 @@ class usersClass{
         else{
             pool.connect((err, client, done) => {
                 const {email}= req.body;
-                const selectQuerry = `SELECT * FROM users WHERE email= $1`;
+                const selectQuerry = `SELECT * FROM users WHERE email=$1`;
                 const value=[email];
                 client.query(selectQuerry, value, (err, result) => {
                     if(result.rows[0]){
@@ -41,7 +41,7 @@ class usersClass{
                         bcrypt.hash(password, saltRounds, (err, hash) => {
                             const passWord = hash;
                             const insertQuerry = `INSERT INTO users 
-                            (firstName, lastName, email, password, status, address, bio, occupation, expertise)
+                            ("firstName", "lastName", email, password, status, address, bio, occupation, expertise)
                             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
                             const values = [firstName, lastName, email, passWord, status, address, bio, occupation, expertise];
                             client.query(insertQuerry, values, (err, results) => {
@@ -74,6 +74,7 @@ class usersClass{
                         
                     }
                 })
+                done();
             })
         }
     }
