@@ -1,8 +1,9 @@
 const {Pool} = require('pg');
-import {DATABASE_URL} from '../config/config';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const pool = new Pool({
-    connectionString:DATABASE_URL
+    connectionString:process.env.DATABASE_URL
 })
 export const createTable = () => {
     const createTablesQuerry = `CREATE TABLE IF NOT EXISTS

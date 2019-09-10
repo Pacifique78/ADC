@@ -4,13 +4,13 @@ import users from '../model/userModel';
 import loginUserSchema from '../joiSchemas/loginUserSchema';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import secret from '../config/config';
 import sessions from '../model/sessionModel';
 import createSessionSchema from '../joiSchemas/createSessionSchema';
 import reviews from '../model/reviewModel';
 import reviewMentorSchema from '../joiSchemas/reviewMentorSchema';
-import poll from '../db/createTables';
 import pool from '../db/createTables';
+import dotenv from 'dotenv';
+dotenv.config();
 
 class usersClass{
     createUser(req,res){
@@ -52,7 +52,7 @@ class usersClass{
                                     const id = results.rows[0].id;
                                     let token = jwt.sign({
                                         id,firstName,lastName,email,status
-                                    }, secret, {
+                                    }, process.env.secret, {
                                         expiresIn: '24h'
                                     })
                                     return res.status(201).json({
@@ -107,7 +107,7 @@ class usersClass{
                             lastName,
                             email,
                             status
-                        }, secret, {
+                        }, process.env.secret, {
                             expiresIn: '24h'
                         })
                         return res.status(200).json({
