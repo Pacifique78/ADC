@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
-    "test": "npm run drop && npm run create && nyc --reporter=html --reporter=text mocha --require @babel/register server/test/test.js --exit",
-    "dev": "npm run drop && npm run create && nodemon --exec babel-node index.js",
+    "start": "cross-env NODE_ENV=production babel-node index.js",
+    "test": "cross-env NODE_ENV=test && npm run drop && npm run create && nyc --reporter=html --reporter=text mocha --require @babel/register server/test/test.js --exit",
+    "dev": "nodemon --exec babel-node index.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "create": "babel-node server/db/createTables.js createTable",
     "drop": "babel-node server/db/deleteTables.js deleteTable"
@@ -32,6 +32,7 @@
     "@hapi/joi": "^15.1.1",
     "babel-loader": "^8.0.6",
     "bcrypt": "^3.0.6",
+    "cross-env": "^5.2.1",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "heroku": "^7.29.0",
@@ -53,6 +54,5 @@
     "coveralls": "^3.0.6",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1"
-    
   }
 }
