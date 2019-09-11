@@ -99,9 +99,9 @@ class usersClass{
                 })
             }
             else{
-                return res.status(401).json({
-                    status:401,
-                    error: "Incorrect email"
+                return res.status(404).json({
+                    status:404,
+                    error: "Email not found"
                 })
             }
         } catch (error) {
