@@ -27,7 +27,13 @@ class usersClass{
                 const selectQuerry = `SELECT * FROM users WHERE email=$1`;
                 const value=[email];
                 client.query(selectQuerry, value, (err, result) => {
-                    if(result.rows[0]){
+                    if(err){
+                        return res.status(500).json({
+                            status: 500,
+                            error: err.message
+                        })
+                    }
+                    else if(result.rows[0]){
                         return res.status(409).json({
                             status: 409,
                             error: "User with such email already exists"
@@ -44,6 +50,12 @@ class usersClass{
                             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
                             const values = [firstName, lastName, email, passWord, status, address, bio, occupation, expertise];
                             client.query(insertQuerry, values, (err, results) => {
+                                if(err){
+                                    return res.status(500).json({
+                                        status: 500,
+                                        error: err.message
+                                    })
+                                }
                                 if(results.rows[0]){
                                     const id = results.rows[0].id;
                                     let token = jwt.sign({

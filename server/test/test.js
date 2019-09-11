@@ -2,6 +2,7 @@ import chai from 'chai';
 import chaiHttp from "chai-http";
 import app from "../../index";
 import {expect} from 'chai';
+import {describe, it} from 'mocha';
 chai.use(chaiHttp);
 
 describe('Welcome Home page', () => {
@@ -16,14 +17,14 @@ describe('Welcome Home page', () => {
 describe('User SignUp', ()=>{
     it('Should allow a user to signup', (done)=>{
         const testUser = {
-            "lastName":"lastName",
-            "firstName":"firstName",
-            "email":"userEmail@gmail.com",
-            "password":"password",
-            "address":"address",
-            "bio":"bio",
-            "occupation":"occupation",
-            "expertise":"expertise"
+            firstName:"firstName",
+            lastName:"lastName",
+            email:"userEmail@gmail.com",
+            password:"password",
+            address:"address",
+            bio:"bio",
+            occupation:"occupation",
+            expertise:"expertise"
         };
         chai.request(app).post('/api/v2/auth/signup')
         .send(testUser)
@@ -35,15 +36,14 @@ describe('User SignUp', ()=>{
     })
     it('Should NOT allow a user to signup: Invalid data', (done)=>{
         const testUser3 = {
-            "lastName":"lastName",
-            "firstName":"",
-            "email":"userEmail@gmail.com",
-            "password":"password",
-            "status":"admin",
-            "address":"address",
-            "bio":"bio",
-            "occupation":"occupation",
-            "expertise":"expertise"
+            firstName:"",
+            lastName:"lastName",
+            email:"userEmail@gmail.com",
+            password:"password",
+            address:"address",
+            bio:"bio",
+            occupation:"occupation",
+            expertise:"expertise"
         };
         chai.request(app).post('/api/v2/auth/signup')
         .send(testUser3)
@@ -55,14 +55,14 @@ describe('User SignUp', ()=>{
     })
     it('Should NOT allow a user to signup: user already exist', (done)=>{
         const testUser1 = {
-            "lastName":"lastName",
-            "firstName":"firstName",
-            "email":"systemadmin@gmail.com",
-            "password":"password",
-            "address":"address",
-            "bio":"bio",
-            "occupation":"occupation",
-            "expertise":"expertise"
+            firstName:"lastName",
+            lastName:"firstName",
+            email:"systemadmin@gmail.com",
+            password:"password",
+            address:"address",
+            bio:"bio",
+            occupation:"occupation",
+            expertise:"expertise"
         };
         chai.request(app).post('/api/v2/auth/signup')
         .send(testUser1)
