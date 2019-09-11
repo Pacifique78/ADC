@@ -1,13 +1,15 @@
 import dotenv from 'dotenv';
-let connection = "";
+let connect = "";
 dotenv.config();
-if(process.env.NODE_ENV =='production'){
-    connection = process.env.DATABASE_URL3;
+switch(process.env.NODE_ENV){
+    case 'production':
+        connect = process.env.DATABASE_URL3;
+        break;
+    case 'test':
+        connect = process.env.DATABASE_URL2;
+        break;
+    default:
+        connect = process.env.DATABASE_URL;
+        break;
 }
-else if(process.env.NODE_ENV =='test'){
-    connection = process.env.DATABASE_URL2;
-}
-else if(process.env.NODE_ENV =='development'){
-    connection = process.env.DATABASE_URL;
-}
-export default connection;
+export default connect;
