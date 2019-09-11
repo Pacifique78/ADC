@@ -45,22 +45,7 @@ class usersClass{
             })
         }
     }
-    async findUsers(req,res){
-        try {
-            const queryString = `SELECT * FROM users;`;
-            const rows = await query(queryString);
-            return res.status(200).json({
-                rows
-            });
-        } catch (error) {
-            const message = error.message || "Error occured";
-            res.status(400).json({
-                error:{
-                    message
-                }
-            })
-        }
-    }
+    
     
 }
 
