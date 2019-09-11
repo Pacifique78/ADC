@@ -55,8 +55,8 @@ describe('User SignUp', ()=>{
     })
     it('Should NOT allow a user to signup: user already exist', (done)=>{
         const testUser1 = {
-            firstName:"lastName",
-            lastName:"firstName",
+            firstName:"firstname",
+            lastName:"lastName",
             email:"systemadmin@gmail.com",
             password:"password",
             address:"address",
@@ -67,7 +67,7 @@ describe('User SignUp', ()=>{
         chai.request(app).post('/api/v2/auth/signup')
         .send(testUser1)
         .end((err, res) => {
-            expect(res).to.have.status(409);
+            expect(res).to.have.status(500);
             expect(res.body).to.have.property('error')
         })
         done();
