@@ -13,6 +13,6 @@ export const checkToken =  (req,res,next) =>{
     else{
         const verified = jwt.verify(token, process.env.secret);
         req.tokenData = verified;
-        next();
     }
+    next();
 }

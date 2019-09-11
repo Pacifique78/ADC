@@ -135,3 +135,61 @@ describe('User Signin', ()=>{
     });
 });
 
+//change a user
+describe('Change a user', ()=>{
+    it('Should allow a user to to become a mentor', (done)=>{
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjo5OTk5OTc0NDE4fQ.wxE4C25XSe-rKkGfxLMAYxQqatFbvd952jnVcL_cUnQ";
+        const userId = 4;
+        chai.request(app).patch(`/api/v2/user/${userId}`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property('message');
+            done();
+        });
+    });
+    it('Should not allow a user to to become a mentor: Invalid user Id', (done)=>{
+        const userId1= 300;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjo5OTk5OTc0NDE4fQ.wxE4C25XSe-rKkGfxLMAYxQqatFbvd952jnVcL_cUnQ"
+        chai.request(app).patch(`/api/v2/user/${userId1}`) 
+        .set('Authorization',token)
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Should not allow a user to become a mentor: User is already a mentor', (done) =>{
+        const userId2 = 3;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjo5OTk5OTc0NDE4fQ.wxE4C25XSe-rKkGfxLMAYxQqatFbvd952jnVcL_cUnQ";
+        chai.request(app).patch(`/api/v2/user/${userId2}`)
+        .set('Authorization', token)
+        .end((err,res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Should not allow a user to become a mentor: Your are not the admin', (done) => {
+        const userId3 = 4;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4ODgwMTgsImV4cCI6OTk5OTk3NDQxOH0.5X7nOODJmua64xSa2rLrdcML-eFs5SznUN-NFTz4ZK4";
+        chai.request(app).patch(`/api/v2/user/${userId3}`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Shouls not allow a user to become a mentor: Token is not provided', (done) => {
+        const userId4 = 4;
+        const token = "";
+        chai.request(app).patch(`/api/v2/user/${userId4}`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        })
+    })
+})

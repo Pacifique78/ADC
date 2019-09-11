@@ -25,7 +25,7 @@ class usersClass{
                         const passWord = await bcrypt.hash(password, saltRounds)
                         const insertQuerry = `INSERT INTO users 
                         (firstname, lastname, email, password, status, address, bio, occupation, expertise)
-                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
+                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;`;
                         const values = [firstName, lastName, email, password, status, address, bio, occupation, expertise];
                         const results = await query(insertQuerry,values);
                         const id = results[0].id;
@@ -102,6 +102,37 @@ class usersClass{
                 return res.status(404).json({
                     status:404,
                     error: "Email not found"
+                })
+            }
+        } catch (error) {
+            const message = error.message || "Unknown error occured";
+            return res.status(400).json({
+                status:400,
+                error: message
+            })
+        }
+    }
+    async changeUser(req, res){
+        try {
+            const userId = parseInt(req.params.userId);
+            const selectQuerry = `SELECT * FROM users WHERE id= $1 AND status=$2;`;
+            const values = [userId, "mentee"];
+            const result = await query(selectQuerry, values);
+            if(result[0]){
+                const updateQuerry = `UPDATE users SET status=$1 WHERE id=$2;`;
+                const updateValues = ["mentor", result[0].id];
+                const results = await query(updateQuerry, updateValues);
+                if(results){
+                    return res.status(200).json({
+                        status: 200,
+                        message: "User changed successfully"
+                    })
+                }
+            }
+            else{
+                return res.status(404).json({
+                    status:404,
+                    error: "User with such id not found or he is already a mentor"
                 })
             }
         } catch (error) {
