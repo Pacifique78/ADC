@@ -188,8 +188,18 @@ describe('Change a user', ()=>{
             expect(res).to.have.status(401);
             expect(res.body).to.have.property('error');
             done();
-        })
-    })
+        });
+    });
+    it('Should not allow a user to become a mentor: Invalid params', (done)=>{
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjo5OTk5OTc0NDE4fQ.wxE4C25XSe-rKkGfxLMAYxQqatFbvd952jnVcL_cUnQ";
+        const userId = "2-";
+        chai.request(app).patch(`/api/v2/user/${userId}`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+        });
+    });
 })
 
 describe('Get all mentors', ()=>{
@@ -226,8 +236,18 @@ describe('Get specific mentor', ()=>{
             expect(res.body).to.have.property('message');
             expect(res.body.data).to.be.a("object");
             done();
-        })
-    })
+        });
+    });
+    it('Should not return mentor with the specified ID: invalid params', (done)=>{
+        const mentorId= "3-";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
+        chai.request(app).get(`/api/v2/mentors/${mentorId}`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+        });
+    });
     it('Should not return a mentor : Invalid mentorid', (done)=>{
         const mentorId= 300;
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
@@ -369,6 +389,16 @@ describe('Accept mentorship session request', ()=>{
             done();
         })
     })
+    it('Should not return a success: Invalid params', (done)=>{
+        const sessionId = "2-";
+        const  token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.V-CuhJy3AbuMSrIhtO8dBs5J5-NLhQdc98uz7bFiFhA";
+        chai.request(app).patch(`/api/v2/sessions/${sessionId}/accept`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(400);
+            done();
+        })
+    })
 })
 describe('Reject mentorship session request', ()=>{
     it('Should return a success: request rejected', (done)=>{
@@ -380,6 +410,16 @@ describe('Reject mentorship session request', ()=>{
             expect(res).to.have.status(200);
             expect(res.body).to.have.property('message');
             expect(res.body.data).to.be.a("object");
+            done();
+        });
+    });
+    it('Should return a success: request rejected', (done)=>{
+        const sessionId = "1&^";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.V-CuhJy3AbuMSrIhtO8dBs5J5-NLhQdc98uz7bFiFhA";
+        chai.request(app).patch(`/api/v2/sessions/${sessionId}/reject`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(400);
             done();
         });
     });

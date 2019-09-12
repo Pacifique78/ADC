@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production babel-node index.js",
+    "start": "cross-env NODE_ENV=production && npm run drop && npm run create && babel-node index.js",
     "test": "cross-env NODE_ENV=test && npm run drop && npm run create && nyc --reporter=html --reporter=text mocha --require @babel/register server/test/test.js --exit",
     "dev": "nodemon --exec babel-node index.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",

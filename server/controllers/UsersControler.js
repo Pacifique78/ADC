@@ -37,14 +37,7 @@ class usersClass{
                             message: "User created",
                             data: {
                                 id,
-                                firstName,
-                                lastName,
                                 email,
-                                status,
-                                address,
-                                bio,
-                                occupation,
-                                expertise
                             },
                             token
                         })
@@ -78,14 +71,7 @@ class usersClass{
                         message: "User looged in successfully",
                         data: {
                             id,
-                            firstname,
-                            lastname,
                             email,
-                            status,
-                            address,
-                            bio,
-                            occupation,
-                            expertise
                         },
                         token
                     })
