@@ -1,8 +1,9 @@
 const {Pool} = require('pg');
-import {DATABASE_URL} from '../config/config';
-
+import dotenv from 'dotenv';
+import connect from '../db/config';
+dotenv.config();
 const pool = new Pool({
-    connectionString:DATABASE_URL
+    connectionString:connect
 })
 export const deleteTable = () => {
     const deleteTablesQuerry = `
@@ -10,7 +11,7 @@ export const deleteTable = () => {
     DROP TABLE IF EXISTS sessions CASCADE;
     DROP TABLE IF EXISTS REVIEWS CASCADE;`
     pool.query(deleteTablesQuerry)
-    .then((res) => console.log(res))
+    .then((res) => console.log("All tables deleted successfully..."))
     .catch((err) => {
         console.log(err);
         pool.end();

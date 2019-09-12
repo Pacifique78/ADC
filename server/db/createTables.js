@@ -1,8 +1,9 @@
 const {Pool} = require('pg');
-import {DATABASE_URL} from '../config/config';
-
+import dotenv from 'dotenv';
+import connect from '../db/config';
+dotenv.config();
 const pool = new Pool({
-    connectionString:DATABASE_URL
+    connectionString:connect
 })
 export const createTable = () => {
     const createTablesQuerry = `CREATE TABLE IF NOT EXISTS
@@ -39,7 +40,7 @@ export const createTable = () => {
         PRIMARY KEY(sessionId)
     );
     INSERT INTO users 
-    (firstName, lastName, email, password, status, address, bio, occupation, expertise)
+    (firstname, lastName, email, password, status, address, bio, occupation, expertise)
      VALUES('system', 'admin', 'systemadmin@gmail.com', '$2b$10$af95diBy/crnvEWxiA2r3u64S6osMVM0kg7mNIjm9AGwFkZYxa1Ni', 'admin', 'address', 'bio', 'occupation', 'expertise');
     INSERT INTO users 
     (firstName, lastName, email, password, status, address, bio, occupation, expertise)
@@ -55,7 +56,7 @@ export const createTable = () => {
     VALUES(2, 3, 4, 3, 'Peter Okabo', 'fjjcbvjdfbvjfbvbfvhdhvjfbsvui');
     `
     pool.query(createTablesQuerry)
-    .then((res) => console.log(res))
+    .then((res) => console.log("Database tables set successfully..."))
     .catch((err) => {
         console.log(err);
         pool.end();
