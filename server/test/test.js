@@ -193,3 +193,26 @@ describe('Change a user', ()=>{
         })
     })
 })
+// get mentors
+describe('Get all mentors', ()=>{
+    it('Should should return all mentors', (done)=>{
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
+        chai.request(app).get('/api/v2/mentors') 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property('message');
+            done();
+        });
+    });
+    it('Shouls not return all mentors: Token is not provided', (done) => {
+        const token = "";
+        chai.request(app).get(`/api/v2/mentors`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+});
