@@ -68,7 +68,7 @@ export const createTable = () => {
     VALUES(2, 5, 'jidsjvbaervpfuiacdaf jvc uajafbpvu ivuuiasdc', 'qwert123@gmail.com', 'Request submited successfully');
     INSERT INTO reviews 
     (sessionId, mentorId, menteeId, score, menteeFullName, remark)
-    VALUES(3, 2, 8, 1, 'Peter Okabo', 'fjjcbvjdfbvjfbvbfvhdhvjfbsvuihvd');
+    VALUES(3, 2, 8, 1, 'Peter Okabo', 'fjjcbvjdfbvjfbvbfvhdhvjfbsvui');
     `
     pool.query(createTablesQuerry)
     .then((res) => console.log("Database tables set successfully..."))

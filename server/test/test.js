@@ -312,3 +312,61 @@ describe('Create a mentorship session', ()=>{
         })
     })
 })
+describe('Accept mentorship session request', ()=>{
+    it('Should return a success: request accepted', (done)=>{
+        const sessionId = 2;
+        const  token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.V-CuhJy3AbuMSrIhtO8dBs5J5-NLhQdc98uz7bFiFhA";
+        chai.request(app).patch(`/api/v2/sessions/${sessionId}/accept`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property('message');
+            expect(res.body.data).to.be.a("object");
+            done();
+        })
+    })
+    it('Should return an error: invalid sessionId', (done)=>{
+        const sessionId = 500;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.JdDqHqlFJSvJTQFyfPy4qykgBP1ETID5-Y4I0qkBpRg";
+        chai.request(app).patch(`/api/v2/sessions/${sessionId}/accept`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+            done();
+        })
+    })
+    it('Should return an error: session not yours to accept', (done) => {
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.JdDqHqlFJSvJTQFyfPy4qykgBP1ETID5-Y4I0qkBpRg";
+        const sessionId =1;
+        chai.request(app).patch(`/api/v2/sessions/${sessionId}/accept`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        })
+    })
+    it('Should return an error: Your not a mentor', (done) => {
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4ODgwMTgsImV4cCI6OTk5OTk3NDQxOH0.5X7nOODJmua64xSa2rLrdcML-eFs5SznUN-NFTz4ZK4";
+        const sessionId1 = 1;
+        chai.request(app).patch(`/api/v2/sessions/${sessionId1}/accept`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        }) 
+    })
+    it('Shouls return an error: Token is not provided', (done) => {
+        const sessionId2 = 2;
+        const token = "";
+        chai.request(app).patch(`/api/v2/sessions/${sessionId2}/accept`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        })
+    })
+})
