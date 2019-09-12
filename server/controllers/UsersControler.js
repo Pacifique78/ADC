@@ -279,6 +279,37 @@ class usersClass{
             })
         }
     }
+    async getSession(req, res){
+        const {id, status} = req.tokenData
+        if(status === "mentee"){
+            const selectQuerry = `SELECT * FROM sessions WHERE menteeid=$1;`;
+            const value = [id];
+            const result = await query(selectQuerry, value);
+            if(!result[0]) return res.status(404).json({
+                status:404,
+                error: "there is no session for this mentee"
+            })
+            return res.status(200).json({
+                status:200,
+                message: "session(s) retrieved successfully",
+                data: result
+            })
+        }
+        if(status === "mentor"){
+            const selectQuerry1 = `SELECT * FROM sessions WHERE mentorid=$1;`;
+            const value1 = [id];
+            const result = await query(selectQuerry1, value1);
+            if(!result[0]) return res.status(404).json({
+                status:404,
+                error: "there is no session for this mentor"
+            })
+            return res.status(200).json({
+                status:200,
+                message: "session(s) retrieved successfully",
+                data: result
+            })
+        }
+    }
 }
 
 const newclass= new usersClass();
