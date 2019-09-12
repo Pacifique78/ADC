@@ -20,4 +20,3 @@ export const query = async(queryString, values=[]) =>pool
       throw e
     })
 })
- 
