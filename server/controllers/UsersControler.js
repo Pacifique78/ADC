@@ -1,7 +1,5 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import createSessionSchema from '../joiSchemas/createSessionSchema';
-import reviewMentorSchema from '../joiSchemas/reviewMentorSchema';
 import dotenv from 'dotenv';
 import {query} from '../db'
 dotenv.config();
@@ -338,6 +336,20 @@ class usersClass{
             status:201,
             message: "review created successfully",
             data: results[0]
+        })
+    }
+    async deleteReview(req, res){
+        const sessionid = parseInt(req.params.sessionId);
+        const deleteQuerry = `DELETE FROM reviews WHERE sessionid=$1 RETURNING *;`;
+        const value = [sessionid];
+        const result = await query(deleteQuerry, value);
+        if(!result[0]) return res.status(404).json({
+            status:404,
+            error: "Review with such Id not found"
+        })
+        return res.status(200).json({
+            status:200,
+            message: "Review deleted successfully"
         })
     }
 }

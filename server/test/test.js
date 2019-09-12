@@ -560,3 +560,49 @@ describe('Create session review', () => {
         });
     });
 });
+describe('Delete a session review deemed inappropriate:', () => {
+    it('Should allow an admin to delete a session review: Riview deleted successfully', (done) => {
+        const sessionId = 2;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2NzkyOTE5NiwiZXhwIjo5OTk5OTE1NTk2fQ.VxwviZS8qi4tw-e00eb2bU-Coe9mvtYFyC8cjUGNjsQ";
+        chai.request(app).delete(`/api/v2/sessions/${sessionId}/review`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property('message');
+            done();
+        });
+    });
+    it('Should Not delete a session review: Session id not found', (done) => {
+        const sessionId1 = 100;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2NzkyOTE5NiwiZXhwIjo5OTk5OTE1NTk2fQ.VxwviZS8qi4tw-e00eb2bU-Coe9mvtYFyC8cjUGNjsQ";
+        chai.request(app).delete(`/api/v2/sessions/${sessionId1}/review`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Should not delete a session review: Only admin can di this', (done) => {
+        const sessionId2 = 2;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc5MjkxOTYsImV4cCI6OTk5OTkxNTU5Nn0.CWRKJz_K6WDihFqSpFaC2XH4ED1H5n4OReWGhRg_5TA";
+        chai.request(app).delete(`/api/v2/sessions/${sessionId2}/review`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Should not delete a session review: token not provided', (done) => {
+        const sessionId3 = 2;
+        const token = "";
+        chai.request(app).post(`/api/v2/sessions/${sessionId3}/review`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+});

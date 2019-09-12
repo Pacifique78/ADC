@@ -19,4 +19,5 @@ router.patch('/api/v2/sessions/:sessionId/accept', [checkToken, checkMentor], ne
 router.patch('/api/v2/sessions/:sessionId/reject', [checkToken, checkMentor], newclass.rejectMentorshipSession);
 router.get('/api/v2/sessions', checkToken, newclass.getSession);
 router.post('/api/v2/sessions/:sessionId/review', [checkToken, checkReviewMentor], newclass.reviewMentor);
+router.delete('/api/v2/sessions/:sessionId/review', [checkToken, checkAdmin], newclass.deleteReview);
 export default router;
