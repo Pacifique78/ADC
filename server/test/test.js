@@ -251,3 +251,64 @@ describe('Get specific mentor', ()=>{
         })
     })
 })
+describe('Create a mentorship session', ()=>{
+    it('Should return a success: request submitted', (done)=>{
+        const testUser1= {
+            "mentorId": 3,
+            "questions": "Could you be my mentor"
+        };
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
+        chai.request(app).post('/api/v2/sessions')
+        .set('Authorization', token)
+        .send(testUser1) 
+        .end((err, res) => {
+            expect(res).to.have.status(201);
+            expect(res.body).to.have.property('message');
+            done();
+        })
+    })
+    it('Should return an error: invalid mentorId', (done)=>{
+        const testUser2= {
+        "mentorId":1000,
+        "questions":"Could you be my mentor"
+        };
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
+        chai.request(app).post('/api/v2/sessions') 
+        .set('Authorization', token)
+        .send(testUser2)
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+            done();
+        })
+    })
+    it('Should return an error: Invalid data', (done) =>{
+        const testUser4= {
+            "mentorId":true,
+            "questions":"Could you be my mentor"
+            };
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
+        chai.request(app).post('/api/v2/sessions')
+        .set('Authorization', token)
+        .send(testUser4)
+        .end((err, res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.have.property("error");
+            done();
+        })
+    })
+    it('Shouls not return an error: Token is not provided', (done) => {
+        const testUser5= {
+            "mentorId":3,
+            "questions":"Could you be my mentor"
+            };
+        const token = "";
+        chai.request(app).post(`/api/v2/sessions`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        })
+    })
+})
