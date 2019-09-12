@@ -239,7 +239,6 @@ class usersClass{
                 const updateQuerry = `UPDATE sessions SET sessionstatus=$1 where sessionid=$2;`;
                 const values = ["request accepted", result[0].sessionid];
                 const results = await query(updateQuerry, values);
-                console.log(results);
                 return res.status(200).json({
                     status:200,
                     message: "Request accepted",

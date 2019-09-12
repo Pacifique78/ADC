@@ -53,7 +53,7 @@ export const createTable = () => {
     VALUES('peter', 'Okabo', 'peter@gmail.com', '$2b$10$bV37mu7gaOE9Usmw4bg4DuRxFW1lKJKIKaVsLKjFnzBZVwUQFdshS', 'mentee', 'address', 'bio', 'occupation', 'expertise');
     INSERT INTO sessions 
     (mentorId, menteeId, questions, menteeEmail, sessionStatus)
-    VALUES(2, 3, 'jidsjvbaervpfuiacdaf jvc uajafbpvu ivuuiasdc', 'qwert@gmail.com', 'Request submited successfully');
+    VALUES(3, 4, 'jidsjvbaervpfuiacdaf jvc uajafbpvu ivuuiasdc', 'qwert@gmail.com', 'Request submited successfully');
     INSERT INTO reviews 
     (sessionId, mentorId, menteeId, score, menteeFullName, remark)
     VALUES(2, 3, 4, 3, 'Peter Okabo', 'fjjcbvjdfbvjfbvbfvhdhvjfbsvui');
@@ -65,7 +65,7 @@ export const createTable = () => {
     VALUES('peter2', 'Okabo2', 'peter2@gmail.com', '$2b$10$bV37mu7gaOE9Usmw4bg4DuRxFW1lKJKIKaVsLKjFnzBZVwUQFdshS', 'mentee', 'address', 'bio', 'occupation', 'expertise');
     INSERT INTO sessions 
     (mentorId, menteeId, questions, menteeEmail, sessionStatus)
-    VALUES(2, 5, 'jidsjvbaervpfuiacdaf jvc uajafbpvu ivuuiasdc', 'qwert123@gmail.com', 'Request submited successfully');
+    VALUES(5, 6, 'jidsjvbaervpfuiacdaf jvc uajafbpvu ivuuiasdc', 'qwert123@gmail.com', 'Request submited successfully');
     INSERT INTO reviews 
     (sessionId, mentorId, menteeId, score, menteeFullName, remark)
     VALUES(3, 2, 8, 1, 'Peter Okabo', 'fjjcbvjdfbvjfbvbfvhdhvjfbsvuihvd');
