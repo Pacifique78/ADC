@@ -201,6 +201,28 @@ class usersClass{
             })
         }
     }
+    async createMentorshipSession(req, res){
+        const {mentorId, questions} = req.body;
+        const {id:menteeid, email:menteeemail} = req.tokenData;
+        const selectQuerry = `SELECT * FROM users WHERE id=$1 AND status=$2;`;
+        const values = [mentorId, "mentor"];
+        const result = await query(selectQuerry, values);
+        if(!result[0]){
+            return res.status(404).json({
+                status:404,
+                error: "Mentor with such id not found"
+            })
+        }
+        const insertQuerry = `INSERT INTO sessions (mentorId, menteeId, questions, menteeEmail, sessionStatus)
+        VALUES ($1, $2, $3, $4, $5) RETURNING *;`
+        const insertValues = [mentorId, menteeid, questions, menteeemail, "request submited"];
+        const insertResult = await query(insertQuerry, insertValues);
+        return res.status(201).json({
+            status:201,
+            message: "Session created successfully",
+            data: insertResult
+        })
+    }
 }
 
 const newclass= new usersClass();
