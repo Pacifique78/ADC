@@ -14,4 +14,5 @@ router.patch('/api/v2/user/:userId', [checkToken, checkAdmin], newclass.changeUs
 router.get('/api/v2/mentors', checkToken, newclass.getAllMentors);
 router.get('/api/v2/mentors/:mentorId', checkToken, newclass.getSpecificMentor);
 router.post('/api/v2/sessions', [checkToken, validateSession], newclass.createMentorshipSession);
+router.patch('/api/v2/sessions/:sessionId/accept', [checkToken, checkMentor], newclass.acceptMentorshipRequest);
 export default router;
