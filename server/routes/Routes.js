@@ -6,6 +6,7 @@ import {checkToken} from '../middleware/middleware';
 import {checkNewUser} from '../middleware/checkNewUser';
 import {checkUser} from '../middleware/checkUser';
 import { validateSession } from '../middleware/validateSession';
+import {checkReviewMentor} from '../middleware/checkReviewMentor';
 
 const router=express.Router(); 
 router.post('/api/v2/auth/signup', checkNewUser, newclass.createUser);
@@ -17,4 +18,5 @@ router.post('/api/v2/sessions', [checkToken, validateSession], newclass.createMe
 router.patch('/api/v2/sessions/:sessionId/accept', [checkToken, checkMentor], newclass.acceptMentorshipRequest);
 router.patch('/api/v2/sessions/:sessionId/reject', [checkToken, checkMentor], newclass.rejectMentorshipSession);
 router.get('/api/v2/sessions', checkToken, newclass.getSession);
+router.post('/api/v2/sessions/:sessionId/review', [checkToken, checkReviewMentor], newclass.reviewMentor);
 export default router;
