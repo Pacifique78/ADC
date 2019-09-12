@@ -1,9 +1,9 @@
 const {Pool} = require('pg');
 import dotenv from 'dotenv';
+import connect from '../db/config';
 dotenv.config();
-
 const pool = new Pool({
-    connectionString:process.env.DATABASE_URL
+    connectionString:connect
 })
 export const createTable = () => {
     const createTablesQuerry = `CREATE TABLE IF NOT EXISTS
@@ -40,7 +40,7 @@ export const createTable = () => {
         PRIMARY KEY(sessionId)
     );
     INSERT INTO users 
-    (firstName, lastName, email, password, status, address, bio, occupation, expertise)
+    (firstname, lastName, email, password, status, address, bio, occupation, expertise)
      VALUES('system', 'admin', 'systemadmin@gmail.com', '$2b$10$af95diBy/crnvEWxiA2r3u64S6osMVM0kg7mNIjm9AGwFkZYxa1Ni', 'admin', 'address', 'bio', 'occupation', 'expertise');
     INSERT INTO users 
     (firstName, lastName, email, password, status, address, bio, occupation, expertise)
