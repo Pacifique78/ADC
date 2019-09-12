@@ -428,3 +428,58 @@ describe('Reject mentorship session request', ()=>{
         });
     });
 });
+describe('get sessions', ()=>{
+    it('Should return an error: User did not create a session', (done)=>{
+        const token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3ODkyNjY3LCJleHAiOjk5OTk5NzkwNjd9.LOhCG1zi9xMDu7E9MXTdTRVin-LaAu3qErxEHRbauoM";
+        chai.request(app).get(`/api/v2/sessions`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Should return a success: session(s) found', (done)=>{
+        const token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
+        chai.request(app).get(`/api/v2/sessions`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property('message');
+            expect(res.body.data).to.be.a("array");
+            done();
+        });
+    });
+    it('Should return an error: There is no session created for such mentor', (done)=>{
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.JdDqHqlFJSvJTQFyfPy4qykgBP1ETID5-Y4I0qkBpRg";
+        chai.request(app).get(`/api/v2/sessions`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Should return a success: session(s) found', (done)=>{
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50b3IiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.V-CuhJy3AbuMSrIhtO8dBs5J5-NLhQdc98uz7bFiFhA";
+        chai.request(app).get(`/api/v2/sessions`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property('message');
+            expect(res.body.data).to.be.a("array");
+            done();
+        });
+    });
+    it('Shouls return an error: Token is not provided', (done) => {
+        const mentorId3 = 3;
+        const token = "";
+        chai.request(app).get(`/api/v2/sessions`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+});
