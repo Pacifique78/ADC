@@ -309,6 +309,36 @@ class usersClass{
                 data: result
             })
         }
+        const selectQuerry2 = `SELECT * FROM sessions;`;
+        const result = await query(selectQuerry2);
+        return res.status(200).json({
+            status:200,
+            message: "session(s) retrieved successfully",
+            data: result
+        })
+    }
+    async reviewMentor(req, res){
+        const sessionid = parseInt(req.params.sessionId);
+        const selectQuerry = `SELECT * FROM sessions WHERE sessionid=$1;`;
+        const value = [sessionid];
+        const result = await query(selectQuerry, value);
+        if(!result[0]) return res.status(404).json({
+            status:404,
+            error: "Session with such id not found"
+        })
+        const {mentorid, menteeid} = result[0];
+        const {score, remark} = req.body;
+        const {firstName, lastName} = req.tokenData;
+        const menteefullname = `${firstName} ${lastName}`;
+        const insertQuerry = `INSERT INTO reviews (sessionid, mentorid, menteeid, score, menteefullname, remark)
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`;
+        const values = [sessionid, mentorid, menteeid, score, menteefullname, remark];
+        const results = await query(insertQuerry, values);
+        return res.status(201).json({
+            status:201,
+            message: "review created successfully",
+            data: results[0]
+        })
     }
 }
 

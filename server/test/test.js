@@ -472,10 +472,87 @@ describe('get sessions', ()=>{
         });
     });
     it('Shouls return an error: Token is not provided', (done) => {
-        const mentorId3 = 3;
         const token = "";
         chai.request(app).get(`/api/v2/sessions`)
         .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Shouls return an all sessions: Admin request', (done) => {
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWUxQGdtYWlsLmNvbSIsInN0YXR1cyI6ImFkbWluIiwiaWF0IjoxNTY4MTE1OTA0LCJleHAiOjk5OTk5OTIzMDR9.T-_gDQGIoAdic-xFFC4YFYYBbkIH8t6kY-RvpA12EX4";
+        chai.request(app).get(`/api/v2/sessions`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property('message');
+            expect(res.body.data).to.be.a("array");
+            done();
+        });
+    });
+});
+describe('Create session review', () => {
+    it('Should allow a user to cerate a session review: Riview created successfully', (done) => {
+        const testObject = {
+            score: 2,
+            remark: "dhsvb ubeuiafdv pbdfufcg"
+        }
+        const sessionId = 1;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjk5OTk5MTU1OTZ9.yi3KaVUA81O8W3RhaRWfH8C5GML0nM3fpZnaHzgnrEo";
+        chai.request(app).post(`/api/v2/sessions/${sessionId}/review`)
+        .set('Authorization', token)
+        .send(testObject)
+        .end((err, res) => {
+            expect(res).to.have.status(201);
+            expect(res.body).to.have.property('message');
+            expect(res.body.data).to.be.a('object');
+            done();
+        });
+    });
+    it('Should Not allow a user to cerate a session review: Session id not found', (done) => {
+        const testObject1 = {
+            score: 2,
+            remark: "dhsvb ubeuiafdv pbdfufcg"
+        }
+        const sessionId1 = 100;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjk5OTk5MTU1OTZ9.yi3KaVUA81O8W3RhaRWfH8C5GML0nM3fpZnaHzgnrEo";
+        chai.request(app).post(`/api/v2/sessions/${sessionId1}/review`)
+        .set('Authorization', token)
+        .send(testObject1)
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Should not allow a user to cerate a session review: Invalid data', (done) => {
+        const testObject2 = {
+            score: 10,
+            remark: "dhsvb ubeuiafdv pbdfufcg"
+        }
+        const sessionId2 = 1;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3ROYW1lIjoidHV5aXplcmUiLCJsYXN0TmFtZSI6InBhY2lmaXF1ZSIsImVtYWlsIjoidHV5aXplcmVwYWNpZmlxdWVAZ21haWwuY29tIiwic3RhdHVzIjoibWVudGVlIiwiaWF0IjoxNTY3OTI5MTk2LCJleHAiOjk5OTk5MTU1OTZ9.yi3KaVUA81O8W3RhaRWfH8C5GML0nM3fpZnaHzgnrEo";
+        chai.request(app).post(`/api/v2/sessions/${sessionId2}/review`)
+        .set('Authorization', token)
+        .send(testObject2)
+        .end((err, res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.have.property('error');
+            done();
+        });
+    });
+    it('Should not allow a user to cerate a session review: token not provided', (done) => {
+        const testObject3 = {
+            score: 2,
+            remark: "dhsvb ubeuiafdv pbdfufcg"
+        }
+        const sessionId3 = 1;
+        const token = "";
+        chai.request(app).post(`/api/v2/sessions/${sessionId3}/review`)
+        .set('Authorization', token)
+        .send(testObject3)
         .end((err, res) => {
             expect(res).to.have.status(401);
             expect(res.body).to.have.property('error');
