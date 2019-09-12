@@ -251,6 +251,34 @@ class usersClass{
             })
         }
     }
+    async rejectMentorshipSession(req, res){
+        const sessionId = parseInt(req.params.sessionId);
+        const selectQuerry = `SELECT * FROM sessions WHERE sessionid=$1;`;
+        const value = [sessionId];
+        const result = await query(selectQuerry, value);
+        if(!result[0]){
+            return res.status(404).json({
+                status:404,
+                error: "Session not found"
+            })
+        }
+        else{
+            if(result[0].mentorid === req.tokenData.id){
+                const updateQuerry = `UPDATE sessions SET sessionstatus=$1 where sessionid=$2;`;
+                const values = ["request rejected", result[0].sessionid];
+                const results = await query(updateQuerry, values);
+                return res.status(200).json({
+                    status:200,
+                    message: "Request rejected",
+                    data: result[0]
+                })
+            }
+            return res.status(401).json({
+                status:401,
+                error: "Not yours to accept"
+            })
+        }
+    }
 }
 
 const newclass= new usersClass();
