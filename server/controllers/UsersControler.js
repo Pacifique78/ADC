@@ -26,7 +26,7 @@ class usersClass{
                         const insertQuerry = `INSERT INTO users 
                         (firstname, lastname, email, password, status, address, bio, occupation, expertise)
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;`;
-                        const values = [firstName, lastName, email, password, status, address, bio, occupation, expertise];
+                        const values = [firstName, lastName, email, passWord, status, address, bio, occupation, expertise];
                         const results = await query(insertQuerry,values);
                         const id = results[0].id;
                         const token = await jwt.sign({
@@ -67,7 +67,7 @@ class usersClass{
             const value=[email];
             const rows = await query(selectQuerry, value);
             if(rows[0]){
-                const {id, firstname, lastname, email, status} = rows[0];
+                const {id, firstname, lastname, email, status, address, bio, occupation, expertise} = rows[0];
                 const compare = await bcrypt.compare(password, rows[0].password);
                 if(compare){
                     const token = await jwt.sign({
@@ -75,7 +75,6 @@ class usersClass{
                     }, process.env.secret, {
                         expiresIn: '24h'
                     })
-                    const {id, firstname, lastname, email, status, address, bio, occupation, expertise} = rows[0];
                     return res.status(200).json({
                         status:200,
                         message: "User looged in successfully",
@@ -135,6 +134,29 @@ class usersClass{
                     error: "User with such id not found or he is already a mentor"
                 })
             }
+        } catch (error) {
+            const message = error.message || "Unknown error occured";
+            return res.status(400).json({
+                status:400,
+                error: message
+            })
+        }
+    }
+    async getAllMentors(req, res){
+        try {
+            const selectQuerry = `SELECT * FROM users WHERE status=$1;`;
+            const value = ["mentor"];
+            const results = await query(selectQuerry, value);
+            const mentors= [];
+            for(let i=0; i<results.length; i++){
+                const {id, firstname, lastname, email, status, address, bio, occupation, expertise} = results[i];
+                mentors.push({id, firstname, lastname, email, status, address, bio, occupation, expertise});
+            }
+                return res.status(200).json({
+                    status:200,
+                    message: "All mentors retrieved successfully...",
+                    data: mentors
+                })
         } catch (error) {
             const message = error.message || "Unknown error occured";
             return res.status(400).json({
