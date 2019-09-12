@@ -77,7 +77,6 @@ describe('User SignUp', ()=>{
     });
 });
 
-//Login
 describe('User Signin', ()=>{
     it('Should allow a user to signin', (done)=>{
         const testUser = {
@@ -135,7 +134,6 @@ describe('User Signin', ()=>{
     });
 });
 
-//change a user
 describe('Change a user', ()=>{
     it('Should allow a user to to become a mentor', (done)=>{
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzeXN0ZW1hZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJhZG1pbiIsImlhdCI6MTU2Nzg4ODAxOCwiZXhwIjo5OTk5OTc0NDE4fQ.wxE4C25XSe-rKkGfxLMAYxQqatFbvd952jnVcL_cUnQ";
@@ -193,7 +191,7 @@ describe('Change a user', ()=>{
         })
     })
 })
-// get mentors
+
 describe('Get all mentors', ()=>{
     it('Should should return all mentors', (done)=>{
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
@@ -216,3 +214,40 @@ describe('Get all mentors', ()=>{
         });
     });
 });
+
+describe('Get specific mentor', ()=>{
+    it('Should return mentor with the specified ID', (done)=>{
+        const mentorId= 3;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
+        chai.request(app).get(`/api/v2/mentors/${mentorId}`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property('message');
+            expect(res.body.data).to.be.a("object");
+            done();
+        })
+    })
+    it('Should not return a mentor : Invalid mentorid', (done)=>{
+        const mentorId= 300;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0dXlpemVyZXBhY2lmaXF1ZUBnbWFpbC5jb20iLCJzdGF0dXMiOiJtZW50ZWUiLCJpYXQiOjE1Njc4OTI2NjcsImV4cCI6OTk5OTk3OTA2N30.EQw6nJBsoem02wUi1jWXr-sUWJV-HGjPy8SVdFwbp7c";
+        chai.request(app).get(`/api/v2/mentors/${mentorId}`) 
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.have.property('error');
+            done();
+        })
+    })
+    it('Shouls not return a mentor: Token is not provided', (done) => {
+        const mentorId3 = 2;
+        const token = "";
+        chai.request(app).get(`/api/v2/mentors/${mentorId3}`)
+        .set('Authorization', token)
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property('error');
+            done();
+        })
+    })
+})

@@ -152,11 +152,47 @@ class usersClass{
                 const {id, firstname, lastname, email, status, address, bio, occupation, expertise} = results[i];
                 mentors.push({id, firstname, lastname, email, status, address, bio, occupation, expertise});
             }
+            return res.status(200).json({
+                status:200,
+                message: "All mentors retrieved successfully...",
+                data: mentors
+            })
+        } catch (error) {
+            const message = error.message || "Unknown error occured";
+            return res.status(400).json({
+                status:400,
+                error: message
+            })
+        }
+    }
+    async getSpecificMentor(req, res){
+        try {
+            const mentorId = parseInt(req.params.mentorId);
+            const selectQuerry = `SELECT * FROM users WHERE id=$1 AND status=$2;`;
+            const values = [mentorId,"mentor"];
+            const results = await query(selectQuerry, values);
+            if(results[0]){
+                const {id, firstname, lastname, email, status, address, bio, occupation, expertise} = results[0];
                 return res.status(200).json({
                     status:200,
-                    message: "All mentors retrieved successfully...",
-                    data: mentors
+                    message: "Mentor retrieved successfully...",
+                    data: {
+                        id,
+                        firstname,
+                        lastname,
+                        email,
+                        status,
+                        address,
+                        bio,
+                        occupation,
+                        expertise
+                    }
                 })
+            }
+            return res.status(404).json({
+                status:404,
+                error: "mentor with such id not found"
+            })
         } catch (error) {
             const message = error.message || "Unknown error occured";
             return res.status(400).json({
