@@ -1,0 +1,26 @@
+import newclass from '../controllers/UsersControler';
+import express from 'express';
+import {checkAdmin} from '../middleware/checkAdmin';
+import {checkMentor} from '../middleware/checkMentor';
+import {checkToken} from '../middleware/middleware';
+import {checkNewUser} from '../middleware/checkNewUser';
+import {checkUser} from '../middleware/checkUser';
+import { validateSession } from '../middleware/validateSession';
+import {checkReviewMentor} from '../middleware/checkReviewMentor';  
+import {validateUserParams} from '../joiSchemas/validateUserParams';
+import {validateSessionParams} from '../joiSchemas/validateSessionParams';
+import {validateMentorParams} from '../joiSchemas/validateMentorParams';
+
+const router=express.Router(); 
+router.post('/api/v2/auth/signup', checkNewUser, newclass.createUser);
+router.post('/api/v2/auth/signin', checkUser, newclass.login);
+router.patch('/api/v2/user/:userId', [checkToken, checkAdmin, validateUserParams], newclass.changeUser);
+router.get('/api/v2/mentors', checkToken, newclass.getAllMentors);
+router.get('/api/v2/mentors/:mentorId', [checkToken, validateMentorParams], newclass.getSpecificMentor);
+router.post('/api/v2/sessions', [checkToken, validateSession], newclass.createMentorshipSession);
+router.patch('/api/v2/sessions/:sessionId/accept', [checkToken, checkMentor, validateSessionParams], newclass.acceptMentorshipRequest);
+router.patch('/api/v2/sessions/:sessionId/reject', [checkToken, checkMentor, validateSessionParams], newclass.rejectMentorshipSession);
+router.get('/api/v2/sessions', checkToken, newclass.getSession);
+router.post('/api/v2/sessions/:sessionId/review', [checkToken, checkReviewMentor, validateSessionParams], newclass.reviewMentor);
+router.delete('/api/v2/sessions/:sessionId/review', [checkToken, checkAdmin, validateSessionParams], newclass.deleteReview);
+export default router;
