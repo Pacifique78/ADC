@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/Pacifique78/ADC/badge.svg)](https://coveralls.io/github/Pacifique78/ADC)
 
 # Free Mentors
-Free Mentors is a social initiative where accomplished professionals become role models to young people to provide free mentorship sessions.
+Free mentor is a platform whereby accomplished professionals become role model and share their knowledge, skills and experience to assist young people to progress in their own career.
 ## Features
 * Users can sign up
 * Users can sign in
