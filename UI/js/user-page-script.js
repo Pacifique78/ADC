@@ -5,7 +5,7 @@ viewMentorsBtn.addEventListener('click', ()=>{
     document.getElementById("back").style.visibility = "visible";
     let choices = document.getElementsByClassName("new-mentor");
     for(let choice of choices){
-        choice.addEventListener('click', ()=>{
+        choice.addEventListener('mouseover', ()=>{
             let createSessionBtn = document.getElementsByClassName("create-session");
             for(let btn of createSessionBtn){
                 btn.style.visibility = "visible";
